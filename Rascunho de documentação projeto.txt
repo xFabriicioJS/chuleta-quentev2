@@ -1,0 +1,21 @@
+Projeto de churrascaria do Professor Well refeito com outras tecnologias
+
+Frontend
+
+- React.JS
+- React Router
+- Ant Design
+- Formik
+- Context API
+
+
+____________________
+
+Backend
+
+- SpringBoot
+- Validations
+- MySQL
+- Spring Security com JWT
+- DTOs e Forms para maior segurança
+...
