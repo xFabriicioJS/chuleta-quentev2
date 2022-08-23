@@ -3,6 +3,7 @@ package projeto.chuleta.quente.senac.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -28,22 +29,19 @@ import lombok.Setter;
 @NoArgsConstructor @AllArgsConstructor
 public class Usuario {
 
-	@Id  @Getter @NotNull @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id  @Getter @NotNull @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "id_usuario")
 	private Long id;
 	
-	@NotNull @Getter @Setter @Size(max = 20)
+	@NotNull @Getter @Setter @Size(max = 20) @Column(name = "login_usuario")
 	private String loginUsuario;
 	
 	@NotNull @Getter @Size(max = 20)
 	private String senha;
 
-	public Usuario(@NotNull Long id, @NotNull String loginUsuario, @NotNull String senha) {
-		this.id = id;
-		this.loginUsuario = loginUsuario;
-		this.senha = senha;
-	}
 	
+	@Column (name = "nivel_usuario")
     @ManyToMany(fetch = FetchType.LAZY)
+	@Getter @Setter
     @JoinTable(
         name = "usuario_roles",
         joinColumns = @JoinColumn(name = "usuario_id"),
