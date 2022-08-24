@@ -17,6 +17,7 @@ function Header() {
             <Box mt={4} p={2}>
                 <Image
                 src={logo}
+                fontSize={'4xl'}
                 />
             </Box>
 
