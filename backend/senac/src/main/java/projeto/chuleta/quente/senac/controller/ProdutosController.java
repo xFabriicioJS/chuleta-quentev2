@@ -47,7 +47,7 @@ public class ProdutosController {
 		return produtos;
 		}
 
-		Page<Produto> produtos = produtosRepository.findByProdutoDescriProduto(nomeProduto, paginacao);
+		Page<Produto> produtos = produtosRepository.findByDescriProduto(nomeProduto, paginacao);
 
 		return produtos;
 

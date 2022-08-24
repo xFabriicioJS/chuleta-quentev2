@@ -12,18 +12,18 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 	@GetMapping("/all")
 	public String allAccess() {
-		return "Public Content.";
+		return "TESTE - Conteúdo público.";
 	}
 	
 	@GetMapping("/user")
-	@PreAuthorize("hasRole('USER')  or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	public String userAccess() {
-		return "User Content.";
+		return "TESTE - Endpoint acessível para usuários e admins.";
 	}
 	
 	@GetMapping("/admin")
 	@PreAuthorize("hasRole('ADMIN')")
 	public String adminAccess() {
-		return "Admin Board.";
+		return "TESTE - Endpoint acessível para admins";
 	}
 }

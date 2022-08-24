@@ -9,7 +9,7 @@ import projeto.chuleta.quente.senac.enums.ERole;
 import projeto.chuleta.quente.senac.model.Role;
 
 @Repository
-public interface RoleRepository extends JpaRepository<Long, Role>{
+public interface RoleRepository extends JpaRepository<Role, Long>{
 	
     Optional<Role> findByName(ERole name);
 

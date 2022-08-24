@@ -14,6 +14,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -24,37 +25,38 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "tbusuarios", uniqueConstraints = {
-		@UniqueConstraint(columnNames = "loginUsuario")
+		@UniqueConstraint(columnNames = "login_usuario")
 })
 @NoArgsConstructor 
 public class Usuario {
 
-	@Id  @Getter @NotNull @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "id_usuario")
+	@Id  @Getter @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "id_usuario")
 	private Long idUsuario;
 	
-	@NotNull @Getter @Setter @Size(max = 20) @Column(name = "login_usuario")
+	@NotBlank @Getter @Setter @Column(name = "login_usuario")
 	private String loginUsuario;
 	
-	@NotNull @Getter @Size(max = 20)
+	@NotBlank @Getter @Size(max = 255)
 	@Column(name = "senha_usuario")
 	private String senhaUsuario;
 
 	
-	@Column (name = "nivel_usuario")
     @ManyToMany(fetch = FetchType.LAZY)
 	@Getter @Setter
     @JoinTable(
         name = "usuario_roles",
-        joinColumns = @JoinColumn(name = "usuario_id"),
+        joinColumns = @JoinColumn(name = "id_usuario"),
         inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles = new HashSet<Role>();
 
 
-	public Usuario(@NotNull @Size(max = 20) String loginUsuario, @NotNull @Size(max = 20) String senhaUsuario) {
+	public Usuario(@NotBlank String loginUsuario, @NotBlank String senhaUsuario) {
 		this.loginUsuario = loginUsuario;
 		this.senhaUsuario = senhaUsuario;
 	}
+
+
 	
 
 	

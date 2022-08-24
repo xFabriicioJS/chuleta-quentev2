@@ -68,7 +68,7 @@ public class AuthController {
         return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(),roles));
     }
 
-    @PostMapping("/singup")
+    @PostMapping("/signup")
     public ResponseEntity<?> registrarUsuario(@Valid @RequestBody SignupRequest signupRequest){
         //Verificando se o usuário já existe na base de dados, caso exista retornará 401
         if(usuariosRepository.existsByLoginUsuario(signupRequest.getLoginUsuario())){
