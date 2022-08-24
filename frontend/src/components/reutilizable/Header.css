@@ -1,0 +1,7 @@
+.icon:hover {
+    font-size: 200%;
+}
+
+.icon {
+    transition: 0.3s;
+}
