@@ -26,17 +26,18 @@ import lombok.Setter;
 @Table(name = "tbusuarios", uniqueConstraints = {
 		@UniqueConstraint(columnNames = "loginUsuario")
 })
-@NoArgsConstructor @AllArgsConstructor
+@NoArgsConstructor 
 public class Usuario {
 
 	@Id  @Getter @NotNull @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "id_usuario")
-	private Long id;
+	private Long idUsuario;
 	
 	@NotNull @Getter @Setter @Size(max = 20) @Column(name = "login_usuario")
 	private String loginUsuario;
 	
 	@NotNull @Getter @Size(max = 20)
-	private String senha;
+	@Column(name = "senha_usuario")
+	private String senhaUsuario;
 
 	
 	@Column (name = "nivel_usuario")
@@ -48,6 +49,14 @@ public class Usuario {
         inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles = new HashSet<Role>();
+
+
+	public Usuario(@NotNull @Size(max = 20) String loginUsuario, @NotNull @Size(max = 20) String senhaUsuario) {
+		this.loginUsuario = loginUsuario;
+		this.senhaUsuario = senhaUsuario;
+	}
+	
+
 	
 	
 }

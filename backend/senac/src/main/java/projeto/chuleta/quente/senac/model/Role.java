@@ -24,12 +24,12 @@ public class Role {
 	private Long id;
 	
 	@Enumerated(EnumType.STRING)
-	@Column
+	@Column(length = 20)
 	@Getter @Setter
-	private ERole role;
+	private ERole name;
 	
 	public Role(ERole role) {
-		this.role = role;
+		this.name = role;
 	}
 	
 }

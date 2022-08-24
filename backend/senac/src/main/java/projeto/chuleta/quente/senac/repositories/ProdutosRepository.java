@@ -1,4 +1,4 @@
-package repositories;
+package projeto.chuleta.quente.senac.repositories;
 
 
 import org.springframework.data.domain.Page;

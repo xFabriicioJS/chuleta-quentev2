@@ -1,4 +1,4 @@
-package controller;
+package projeto.chuleta.quente.senac.controller;
 
 import java.util.Optional;
 
@@ -21,9 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import Exceptions.ResourceNotFoundException;
+import projeto.chuleta.quente.senac.Exceptions.ResourceNotFoundException;
 import projeto.chuleta.quente.senac.model.Produto;
-import repositories.ProdutosRepository;
+import projeto.chuleta.quente.senac.repositories.ProdutosRepository;
 
 
 @RestController
