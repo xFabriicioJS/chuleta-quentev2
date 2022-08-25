@@ -47,7 +47,7 @@ function AdminProdutos() {
         p="2"
         rounded="md"
         my="4"
-        gap=""        
+        gap="4"        
         >
         <Heading        
         >

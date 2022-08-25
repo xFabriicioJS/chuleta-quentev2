@@ -50,7 +50,6 @@ function Header() {
             </Stack>
           
         </Stack>
-       
     </Box>
   )
 }

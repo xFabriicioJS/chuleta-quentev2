@@ -13,7 +13,7 @@ function Homepage() {
     backgroundPosition="center"
     background="cover"
     backdropFilter='blur(10px) hue-rotate(90deg)'
-    zIndex="unset"
+    zIndex="-1"
     height="1800px"
     width="100%"
     >
