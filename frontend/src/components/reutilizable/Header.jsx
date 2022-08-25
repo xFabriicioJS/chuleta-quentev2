@@ -12,7 +12,7 @@ import {Link} from 'react-router-dom';
 
 function Header() {
   return (
-    <Box w="full" backgroundColor="gray.100" h="70px" boxShadow={'xl'}>
+    <Box w="full" backgroundColor="gray.100" h="70px" boxShadow={'dark-lg'} roundedBottom="xl">
         <Stack spacing={20} direction="row">
             <Box mt={4} p={2}>
                 <Image

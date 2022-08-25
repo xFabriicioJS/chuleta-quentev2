@@ -19,6 +19,8 @@ import { FiShoppingCart } from 'react-icons/fi'
 import {TbAdjustmentsHorizontal} from 'react-icons/tb'
 import Header from '../reutilizable/Header'
 import { AiFillDelete } from 'react-icons/ai'
+import {FaUsers} from 'react-icons/fa'
+import background from '../../images/background.jpg';
 
 function AdminProdutos() {
 
@@ -26,9 +28,18 @@ function AdminProdutos() {
 
 
   return (
-    <>
+    <Box
+    backgroundImage={background}
+    backgroundRepeat="no-repeat"
+    backgroundPosition="center"
+    background="cover"
+    backdropFilter='blur(10px) hue-rotate(90deg)'
+    zIndex="unset"
+    height="1800px"
+    width="100%"
+    >
         <Header/>
-        <Heading        
+        <Box
         display="flex"
         width="80%"
         m="0 auto"
@@ -36,35 +47,34 @@ function AdminProdutos() {
         p="2"
         rounded="md"
         my="4"
-        fontSize="30"
+        gap=""        
         >
-            Todos os produtos
-            <FiShoppingCart fontSize="50px"/>
+        <Heading        
+        >
+            Todos os usuários
+            
         </Heading>
+        <FaUsers m="2" fontSize="50px"/>
+        </Box>
         <TableContainer
+            bgColor="whiteAlpha.600"        
             width="80%"
             rounded="2xl"
             boxShadow="Dark lg"
             m="0 auto"
         >
-            <Table variant="striped" colorScheme="purple">
-                <TableCaption>Lista de produtos</TableCaption>
+            <Table variant="striped" colorScheme="purple" bgColor="white">
+                <TableCaption bgColor="white">Lista de usuários</TableCaption>
                     <Thead>
                         <Tr>
                             <Th>
-                                Tipo
+                                Id
                             </Th>
                             <Th>
-                                Descrição
+                                Login de usuário
                             </Th>
                             <Th>
-                                Resumo
-                            </Th>
-                            <Th>
-                                Valor
-                            </Th>
-                            <Th>
-                                Imagem
+                                Senha de usuário
                             </Th>
                             <Th display="flex" justifyContent="center">
                                 <Button colorScheme="purple" leftIcon={<IoIosAddCircle/>}>
@@ -75,11 +85,9 @@ function AdminProdutos() {
                     </Thead>
                     <Tbody>
                         <Tr>
-                            <Td>Teste tipo</Td>
-                            <Td>Teste descrição</Td>
-                            <Td>Teste resumo</Td>
-                            <Td>Teste valor</Td>
-                            <Td>Teste imagem</Td>
+                            <Td>Teste Id</Td>
+                            <Td>Teste login de usuário</Td>
+                            <Td>Teste senha de usuário</Td>
                             <Td display="flex" justifyContent="center" gap="2">
                                 <Button leftIcon={<TbAdjustmentsHorizontal/>} colorScheme="teal">Alterar</Button>
                                 <Button leftIcon={<AiFillDelete/>} colorScheme="red">Excluir</Button>
@@ -88,7 +96,7 @@ function AdminProdutos() {
                     </Tbody>
             </Table>
         </TableContainer>
-    </>
+    </Box>
   )
 }
 

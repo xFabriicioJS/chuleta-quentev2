@@ -20,7 +20,7 @@ function Card() {
             <Text mt="5">Descricao blabablalblalalbalal</Text>
             
             <ButtonGroup mt="5">
-                <Button>29.90</Button>
+                <Button>R$ 29.90</Button>
                 <Button>Saiba mais...</Button>
             </ButtonGroup>
         </Box>
