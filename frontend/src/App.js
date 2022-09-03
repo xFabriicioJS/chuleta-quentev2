@@ -1,15 +1,17 @@
-<<<<<<< HEAD
+
 import { Box } from "@chakra-ui/react";
 import { Routes, Route, Link } from "react-router-dom";
-import Admin from "./components/pages/Admin";
-import AdminProdutos from "./components/pages/AdminProdutos";
+import Admin from "./components/pages/admin/Admin";
+import AdminProdutos from "./components/pages/admin/AdminProdutos";
 import Homepage from "./components/pages/Homepage";
-import LoginAdmin from "./components/pages/LoginAdmin";
-import AdminUsuarios from "./components/pages/AdminUsuarios";
-import CadastroCliente from "./components/pages/CadastroCliente";
-import LoginCliente from "./components/pages/LoginCliente";
+import LoginAdmin from "./components/pages/login/LoginAdmin";
+import AdminUsuarios from "./components/pages/admin/AdminUsuarios";
+import CadastroCliente from "./components/pages/login/CadastroCliente";
+import LoginCliente from "./components/pages/login/LoginCliente";
 import "./App.css";
-import AdicionarProduto from "./components/pages/AdicionarProduto";
+import AdicionarProduto from "./components/pages/admin/AdicionarProduto";
+import AdicionarTipo from "./components/pages/admin/AdicionarTipo";
+import AdicionarReserva from './components/pages/cliente/AdicionarReserva'
 
 function App() {
 
@@ -32,8 +34,8 @@ function App() {
           <Route path="/admin/produtos" element={<AdminProdutos />} />
           <Route path="/admin/usuarios" element={<AdminUsuarios/>} />
           <Route path="/cadastro-cliente" element={<CadastroCliente/>} />
-          
-
+          <Route path="/admin/adicionar-tipo" element={<AdicionarTipo/>} />
+          <Route path="/cliente/adicionar-reserva" element={<AdicionarReserva/>} />          
           {/*          <Route path="/destaques" element={<Destaques/>} />
           <Route path="/buscaProduto" element={<BuscaProduto/>} />
           <Route path="/admin" element={<Admin/>} />
@@ -46,50 +48,3 @@ function App() {
 }
 
 export default App;
-=======
-import { Box } from "@chakra-ui/react";
-import { Routes, Route, Link } from "react-router-dom";
-import Admin from "./components/pages/Admin";
-import AdminProdutos from "./components/pages/AdminProdutos";
-import Homepage from "./components/pages/Homepage";
-import Login from "./components/pages/Login";
-import AdminUsuarios from "./components/pages/AdminUsuarios";
-import AdminAddUsuario from "./components/pages/AdminAddUsuario";
-import background from './images/background.jpg';
-
-
-function App() {
-
-
-  return (
-
-    <Box
-    backgroundImage={background}
-    backgroundRepeat="no-repeat"
-    backgroundPosition="center"
-    background="cover"
-    backdropFilter='blur(10px) hue-rotate(90deg)'
-    zIndex="-1"
-    height="1800px"
-    width="100%"
-    >
-        <Routes>
-          <Route path="/" element={<Homepage/>} />
-          <Route path="/login" element={<Login/>} />
-          <Route path="/admin" element={<Admin/>} />
-          <Route path="/admin/produtos" element={<AdminProdutos />} />
-          <Route path="/admin/usuarios" element={<AdminUsuarios/>} />
-          <Route path="/admin/addusuario" element={<AdminAddUsuario/>} />
-          {/*          <Route path="/destaques" element={<Destaques/>} />
-          <Route path="/buscaProduto" element={<BuscaProduto/>} />
-          <Route path="/admin" element={<Admin/>} />
-          
-          <Route path="/admin/usuarios" element={<AdminUsuarios/>} />
-          <Route path="/admin/tipos" element={<AdminTipos/>} /> */}
-        </Routes> 
-        </Box>
-  );
-}
-
-export default App;
->>>>>>> 30e6c3d7c087a8a804f054876a57788c2e534afa

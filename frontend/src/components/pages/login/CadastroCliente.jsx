@@ -13,8 +13,8 @@ import { VStack,
 import React from 'react'
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
-import logo from '../../images/logochurrascopequeno.png';
-import costelona from '../../images/costelona.jpg';
+import logo from '../../../images/logochurrascopequeno.png';
+import costelona from '../../../images/costelona.jpg';
 
 function CadastroCliente() {
 
