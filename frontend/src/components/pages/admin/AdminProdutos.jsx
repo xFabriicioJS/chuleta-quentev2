@@ -32,7 +32,7 @@ function AdminProdutos() {
         display="flex"
         width="80%"
         m="0 auto"
-        bgColor="teal.100"
+        bgColor="orange.100"
         p="2"
         rounded="md"
         my="4"
@@ -43,11 +43,12 @@ function AdminProdutos() {
         </Heading>
         <TableContainer
             width="80%"
+            minWidth="60vw"
             rounded="2xl"
             boxShadow="Dark lg"
             m="0 auto"
         >
-            <Table variant="striped" colorScheme="purple">
+            <Table variant="striped" colorScheme="orange">
                 <TableCaption>Lista de produtos</TableCaption>
                     <Thead>
                         <Tr>
@@ -67,7 +68,7 @@ function AdminProdutos() {
                                 Imagem
                             </Th>
                             <Th display="flex" justifyContent="center">
-                                <Button colorScheme="purple" leftIcon={<IoIosAddCircle/>}>
+                                <Button colorScheme="orange" leftIcon={<IoIosAddCircle/>}>
                                     Adicionar
                                 </Button>
                             </Th>

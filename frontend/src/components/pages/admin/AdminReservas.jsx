@@ -94,9 +94,10 @@ function AdminReservas() {
                             <Td>Teste hora</Td>
                             <Td>Teste númeroPessoas</Td>
                             <Td>Teste Motivo</Td>
+                            <Td>Teste dataAbertura</Td>
+                            <Td>Teste Status</Td>                            
                             <Td display="flex" justifyContent="center" gap="2">
                                 <Button leftIcon={<TbAdjustmentsHorizontal/>} colorScheme="teal">Alterar</Button>
-                                <Button leftIcon={<AiFillDelete/>} colorScheme="red">Excluir</Button>
                             </Td>
                         </Tr>
                     </Tbody>

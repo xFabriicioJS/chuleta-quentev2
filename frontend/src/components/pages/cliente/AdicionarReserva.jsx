@@ -46,7 +46,7 @@ export default function AdicionarProduto() {
   const format = (val) => `$` + val
   const parse = (val) => val.replace(/^\$/, '')
 
-  const [value, setValue] = useState('1.53');
+  const [value, setValue] = useState('1.99');
   const [date, setDate] = useState(new Date());
 
 
@@ -83,8 +83,11 @@ export default function AdicionarProduto() {
             <FormControl>
               <FormLabel htmlFor="tipo">Data pretendida da reserva</FormLabel>
               <DatePicker
+                timeInputLabel="Horário:"
+                dateFormat="dd/MM/yyyy h:mm aa"        
                 showTimeSelect
-                selected={Date}
+                required 
+                selected={date}
                 onChange={(date) => setDate(date)}
                 />
 
