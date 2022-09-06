@@ -22,13 +22,14 @@ import { FiShoppingCart } from 'react-icons/fi'
 import {TbAdjustmentsHorizontal} from 'react-icons/tb'
 import Header from '../../reutilizable/Header'
 import { AiFillDelete } from 'react-icons/ai'
+import DrawerMenu from '../../reutilizable/DrawerMenu';
 
 function AdminReservas() {
 
 
   return (
     <>
-        <Header/>
+        <DrawerMenu/>
         <Heading        
         display="flex"
         width="80%"
@@ -43,13 +44,14 @@ function AdminReservas() {
             <FiShoppingCart fontSize="50px"/>
         </Heading>
         <TableContainer
+            
             width="80%"
             minWidth="60vw"
             rounded="2xl"
             boxShadow="Dark lg"
             m="0 auto"
         >
-            <Table variant="striped" colorScheme="orange">
+            <Table variant="striped" colorScheme="orange" size="md">
                 <TableCaption>Lista de reservas</TableCaption>
                     <Thead>
                         <Tr>
@@ -62,21 +64,15 @@ function AdminReservas() {
                             <Th>
                                 Hora da reserva
                             </Th>
-                            <Th>
-                                Número de pessoas 
-                            </Th>
-                            <Th>
-                                Motivo
-                            </Th>
+                            
+                            
                             <Th>
                                 Data de abertura
                             </Th>
                             <Th>
                                 Nome do cliente
                             </Th>
-                            <Th>
-                                Data de abertura
-                            </Th>
+                            
                             <Th>
                                 Status da reserva
                             </Th>
@@ -92,10 +88,9 @@ function AdminReservas() {
                             <Td>Teste número</Td>
                             <Td>Teste data</Td>
                             <Td>Teste hora</Td>
-                            <Td>Teste númeroPessoas</Td>
-                            <Td>Teste Motivo</Td>
                             <Td>Teste dataAbertura</Td>
-                            <Td>Teste Status</Td>                            
+                            <Td>Teste Nome</Td>                            
+                            <Td>Teste status</Td>                            
                             <Td display="flex" justifyContent="center" gap="2">
                                 <Button leftIcon={<TbAdjustmentsHorizontal/>} colorScheme="teal">Alterar</Button>
                             </Td>

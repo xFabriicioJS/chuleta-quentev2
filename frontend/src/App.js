@@ -14,18 +14,15 @@ import AdicionarTipo from "./components/pages/admin/AdicionarTipo";
 import AdicionarReserva from './components/pages/cliente/AdicionarReserva';
 import AdminTipos from "./components/pages/admin/AdminTipos";
 import AdminReservas from "./components/pages/admin/AdminReservas";
-
+import ClienteReservas from './components/pages/cliente/ClienteReservas';
+import AlterarTipo from './components/pages/admin/AlterarTipo'
 
 function App() {
 
 
-  const basicBoxStyles = {
-    backgroundImage: 'url(https://picsum.photos/id/1080/200/300) center/cover no-repeat'
-  }
+
 
   return (
-
-
     <Box
     >
         <Routes>
@@ -42,6 +39,8 @@ function App() {
           <Route path="/cliente/adicionar-reserva" element={<AdicionarReserva/>} />          
           <Route path="/admin/tipos" element={<AdminTipos/>} />
           <Route path="/admin/reservas" element={<AdminReservas/>} />
+          <Route path="/cliente/reservas" element={<ClienteReservas/>} />
+          <Route path="/admin/reservas/alterar" element={<AlterarTipo/>} />
           {/*          <Route path="/destaques" element={<Destaques/>} />
           <Route path="/buscaProduto" element={<BuscaProduto/>} />
           <Route path="/admin" element={<Admin/>} />

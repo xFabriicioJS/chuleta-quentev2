@@ -1,8 +1,13 @@
+// View responsável por listar TODAS as reservas de todos os clientes
+
+
 import React from 'react'
-import {    
+import {
+    Box,
     Table,
     Thead,
     Tbody,
+    Tfoot,
     Tr,
     Th,
     Td,
@@ -15,12 +20,11 @@ import {
 import {IoIosAddCircle} from 'react-icons/io'  
 import { FiShoppingCart } from 'react-icons/fi'
 import {TbAdjustmentsHorizontal} from 'react-icons/tb'
+import Header from '../../reutilizable/Header'
 import { AiFillDelete } from 'react-icons/ai'
-import DrawerMenu from '../../reutilizable/DrawerMenu'
+import DrawerMenu from '../../reutilizable/DrawerMenu';
 
-function AdminTipos() {
-
-    
+function ClienteReservas() {
 
 
   return (
@@ -36,28 +40,41 @@ function AdminTipos() {
         my="4"
         fontSize="30"
         >
-            Todos os tipos
+            Todos as reservas
             <FiShoppingCart fontSize="50px"/>
         </Heading>
         <TableContainer
+            
             width="80%"
             minWidth="60vw"
             rounded="2xl"
             boxShadow="Dark lg"
             m="0 auto"
         >
-            <Table variant="striped" colorScheme="orange">
-                <TableCaption>Lista dos tipos atuais</TableCaption>
+            <Table variant="striped" colorScheme="orange" size="md">
+                <TableCaption>Lista de reservas</TableCaption>
                     <Thead>
                         <Tr>
                             <Th>
-                                Número do tipo
+                                Número da reserva
                             </Th>
                             <Th>
-                                Rótulo do tipo
+                                Data reservada
                             </Th>
                             <Th>
-                                Sigla
+                                Hora da reserva
+                            </Th>
+                            
+                            
+                            <Th>
+                                Data de abertura
+                            </Th>
+                            <Th>
+                                Número de pessoas
+                            </Th>
+                            
+                            <Th>
+                                Status da reserva
                             </Th>
                             <Th display="flex" justifyContent="center">
                                 <Button colorScheme="orange" leftIcon={<IoIosAddCircle/>}>
@@ -68,12 +85,14 @@ function AdminTipos() {
                     </Thead>
                     <Tbody>
                         <Tr>
-                            <Td>Número tipo</Td>
-                            <Td>Rótulo</Td>
-                            <Td>Sigla</Td>
+                            <Td>Teste número</Td>
+                            <Td>Teste data</Td>
+                            <Td>Teste hora</Td>
+                            <Td>Teste dataAbertura</Td>
+                            <Td>Teste número de pessoas</Td>                            
+                            <Td>Teste status</Td>                            
                             <Td display="flex" justifyContent="center" gap="2">
-                                <Button leftIcon={<TbAdjustmentsHorizontal/>} colorScheme="teal">Alterar</Button>
-                                <Button leftIcon={<AiFillDelete/>} colorScheme="red">Excluir</Button>
+                                <Button leftIcon={<TbAdjustmentsHorizontal/>} colorScheme="green">Visualizar</Button>
                             </Td>
                         </Tr>
                     </Tbody>
@@ -83,4 +102,4 @@ function AdminTipos() {
   )
 }
 
-export default AdminTipos
+export default ClienteReservas;

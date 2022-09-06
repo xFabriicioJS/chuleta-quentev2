@@ -1,13 +1,13 @@
 import React from 'react'
-import Header from '../../reutilizable/Header'
-import {Box, Flex, Button, Heading, Text, ButtonGroup} from '@chakra-ui/react'
 
+import {Box, Flex, Button, Heading, Text, ButtonGroup} from '@chakra-ui/react'
+import DrawerMenu from '../../reutilizable/DrawerMenu';
 
 
 function Admin() {
   return (
     <>
-    <Header/>
+    <DrawerMenu/>
         <Box w="100%" textAlign="center">
             <Heading m="40px auto" bgColor="blackAlpha.800" p="2" rounded="2xl" w="80%" textColor="whiteAlpha.900">Área administrativa</Heading>  
         </Box>

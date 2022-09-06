@@ -15,8 +15,7 @@ import {
     Button,
   } from '@chakra-ui/react'
 
-import {IoIosAddCircle} from 'react-icons/io'  
-import { FiShoppingCart } from 'react-icons/fi'
+import {IoIosAddCircle} from 'react-icons/io'
 import {TbAdjustmentsHorizontal} from 'react-icons/tb'
 import Header from '../../reutilizable/Header'
 import { AiFillDelete } from 'react-icons/ai'

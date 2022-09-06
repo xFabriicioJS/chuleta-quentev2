@@ -19,6 +19,7 @@ import { FiShoppingCart } from 'react-icons/fi'
 import {TbAdjustmentsHorizontal} from 'react-icons/tb'
 import Header from '../../reutilizable/Header'
 import { AiFillDelete } from 'react-icons/ai'
+import DrawerMenu from '../../reutilizable/DrawerMenu';
 
 function AdminProdutos() {
 
@@ -27,7 +28,7 @@ function AdminProdutos() {
 
   return (
     <>
-        <Header/>
+        <DrawerMenu/>
         <Heading        
         display="flex"
         width="80%"
