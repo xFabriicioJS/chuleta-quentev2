@@ -27,7 +27,7 @@ import projeto.chuleta.quente.senac.repositories.ProdutosRepository;
 
 
 @RestController
-@RequestMapping("/topicos")
+@RequestMapping("/api/topicos")
 public class ProdutosController {
 
 

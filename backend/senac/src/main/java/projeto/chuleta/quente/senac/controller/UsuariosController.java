@@ -21,7 +21,7 @@ import projeto.chuleta.quente.senac.model.Usuario;
 import projeto.chuleta.quente.senac.repositories.UsuariosRepository;
 
 @RestController
-@RequestMapping("/usuarios")
+@RequestMapping("/api/usuarios")
 public class UsuariosController {
     
     @Autowired
@@ -65,6 +65,8 @@ public class UsuariosController {
         return ResponseEntity.notFound().build();
 
     }
+
+    
 
 
 

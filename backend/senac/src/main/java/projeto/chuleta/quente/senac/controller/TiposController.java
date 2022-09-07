@@ -24,7 +24,7 @@ import projeto.chuleta.quente.senac.model.Tipos;
 import projeto.chuleta.quente.senac.repositories.TiposRepository;
 
 @RestController
-@RequestMapping ("/tipos")
+@RequestMapping ("/api/tipos")
 public class TiposController {
     
 
