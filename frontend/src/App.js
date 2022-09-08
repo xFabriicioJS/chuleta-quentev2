@@ -16,6 +16,7 @@ import AdminTipos from "./components/pages/admin/AdminTipos";
 import AdminReservas from "./components/pages/admin/AdminReservas";
 import ClienteReservas from './components/pages/cliente/ClienteReservas';
 import AlterarTipo from './components/pages/admin/AlterarTipo'
+import AlterarProduto from "./components/pages/admin/AlterarProduto";
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
                   
           <Route path="/" element={<Homepage/>} />
           <Route path="/admin/adicionar-produto" element={<AdicionarProduto/>} />  
+          <Route path="/admin/produtos/alterar" element={<AlterarProduto/>} />  
           <Route path="/login/admin" element={<LoginAdmin/>} />
           <Route path="/login/cliente" element={<LoginCliente/>} />
           <Route path="/admin" element={<Admin/>} />

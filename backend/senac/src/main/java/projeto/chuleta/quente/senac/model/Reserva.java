@@ -24,7 +24,7 @@ import lombok.Setter;
 import projeto.chuleta.quente.senac.enums.StatusReserva;
 
 @Entity
-@Table(name = "tbnames")
+@Table(name = "tbreservas")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Reserva {

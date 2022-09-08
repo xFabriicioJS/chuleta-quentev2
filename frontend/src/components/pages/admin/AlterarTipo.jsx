@@ -34,12 +34,13 @@ export default function AdicionarTipo() {
 
   return (
     <Box
+    h="100vh"
     bg="gray.100"
     >
     
    <DrawerMenu/>
    
-    <Flex bg="gray.100" align="center" justify="center" h="100vh">
+    <Flex bg="gray.100" align="center" justify="center">
       
       <Box bg="white" p={4} rounded="md" w="50vw">
         <Box

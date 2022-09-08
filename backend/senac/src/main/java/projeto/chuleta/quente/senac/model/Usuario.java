@@ -22,6 +22,8 @@ import javax.validation.constraints.NotBlank;
 
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.br.CPF;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,17 +34,22 @@ import lombok.Setter;
 		@UniqueConstraint(columnNames = "login_usuario")
 })
 @NoArgsConstructor
-@AllArgsConstructor 
+
 public class Usuario {
 
 	@Id @Getter @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "id_usuario")
 	private Long idUsuario;
 	
+	@NotBlank @Getter @Setter @Column(name = "nome_usuario") @Size(max = 55)
+	private String nome;
+
+	@NotBlank @CPF @Getter @Setter @Column(name = "cpf_usuario") @Size(max = 14)
+	private String cpf;
+
 	@NotBlank @Getter @Setter @Column(name = "login_usuario")
 	private String loginUsuario;
 	
-	@NotBlank @Getter @Setter @Column(name = "nome_usuario") @Size(max = 55)
-	private String nome;
+	
 
 	@NotBlank @Getter @Size(max = 255)
 	@Column(name = "senha_usuario")
@@ -62,7 +69,9 @@ public class Usuario {
 	private List<Reserva> reservas = new ArrayList<Reserva>();
 
 
-	public Usuario(@NotBlank String loginUsuario, @NotBlank String senhaUsuario) {
+	public Usuario(@NotBlank String nomeCompleto, @NotBlank String cpf, @NotBlank String loginUsuario, @NotBlank String senhaUsuario) {
+		this.nome = nomeCompleto;
+		this.cpf = cpf;
 		this.loginUsuario = loginUsuario;
 		this.senhaUsuario = senhaUsuario;
 	}

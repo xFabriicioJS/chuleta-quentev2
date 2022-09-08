@@ -26,7 +26,7 @@ import {
 import { AiFillLeftCircle } from "react-icons/ai";
 import DrawerMenu from '../../reutilizable/DrawerMenu';
 
-export default function AdicionarProduto() {
+export default function AlterarProduto() {
 
 
 
@@ -53,7 +53,7 @@ export default function AdicionarProduto() {
     
    <DrawerMenu/>
    
-    <Flex bg="gray.100" align="center" justify="center">
+    <Flex bg="gray.100" align="center" justify="center" h="80vh">
       
       <Box bg="white" p={4} rounded="md" w="50vw">
         <Box
@@ -69,13 +69,13 @@ export default function AdicionarProduto() {
           <Heading
           ml="4"
           >
-            Inserindo produtos
+            Atualizando produto blabalba concatena aqui
           </Heading>
         </Box>
         <form onSubmit={formik.handleSubmit}>
           <VStack spacing={4} align="flex-start">
             <FormControl>
-              <FormLabel htmlFor="tipo">Tipo</FormLabel>
+              <FormLabel htmlFor="tipo">Novo Tipo</FormLabel>
               <Select
                 variant="filled"
                 
@@ -89,7 +89,7 @@ export default function AdicionarProduto() {
 
             </FormControl>
             <FormControl>
-              <FormLabel htmlFor="destaque">Destaque</FormLabel>
+              <FormLabel htmlFor="destaque">Destaque?</FormLabel>
               <RadioGroup defaultValue='2'>
                 <Stack spacing={5} direction='row'>
                   <Radio colorScheme='green' value='Sim'>
@@ -136,7 +136,7 @@ export default function AdicionarProduto() {
           </NumberInput>
             </FormControl>
             <Button type="submit" colorScheme="orange" width="full">
-              Inserir novo produto
+              Atualizar produto
             </Button>
           </VStack>
         </form>
