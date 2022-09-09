@@ -1,4 +1,5 @@
 import { useFormik } from "formik";
+import AlertError from '../../reutilizable/AlertError';
 import {
   Box,
   Button,
@@ -13,11 +14,17 @@ import {
 } from "@chakra-ui/react";
 import {FaUserCircle} from 'react-icons/fa';
 import background from '../../../images/backgroundLogin.jpg';
-import Header from "../../reutilizable/Header";
+
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import AuthService from "../../../services/AuthService";
 
 
 export default function App() {
 
+
+
+  const [message, setMessage] = useState(null);
   let navigate =  useNavigate();
 
   const formik = useFormik({
@@ -32,19 +39,22 @@ export default function App() {
             window.location.reload();
           },
           (error) =>{
-            setMessage("Verifique suas credenciais por favor")
+            setMessage("Verifique suas credenciais por favor");
+          
           }
         )
     }
   });
   return (
-    
+    <>
+      
     <Flex gap="20"
     bgImage={background}
     backgroundRepeat="no-repeat"
     backgroundPosition="center"
     background="cover"
     align="center" justify="center" h="100vh">
+      
       
       <Box
       bgColor="gray.100"
@@ -69,7 +79,7 @@ export default function App() {
       />
       </Box>
       </Box>
-      <Box bg="white" p={6} rounded="xl" w="25%" border="2px solid orange">
+      <Box bg="white" p={6} rounded="xl" w="25%" border="2px solid orange" h="60vh">
         <form onSubmit={formik.handleSubmit}>
           <VStack spacing={4} align="flex-start">
             <Heading
@@ -111,12 +121,19 @@ export default function App() {
             </Text>
             <Button
             w="full"
+            onClick={()=>navigate("/cadastro-cliente")}
             >
               Criar cadastro
             </Button>
+            <Box w="full">
+              {
+                message && <AlertError message={message}/> 
+              }
+            </Box>
           </VStack>
         </form>
       </Box>
     </Flex>
+    </>
   );
 }

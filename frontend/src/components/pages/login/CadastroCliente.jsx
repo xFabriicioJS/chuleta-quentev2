@@ -11,36 +11,22 @@ import { VStack,
   Image
 } from '@chakra-ui/react'
 import React from 'react'
-import {useFormik} from 'formik';
+import {Field, Formik, useFormik} from 'formik';
 import * as Yup from 'yup';
 import logo from '../../../images/logochurrascopequeno.png';
 import costelona from '../../../images/costelona.jpg';
+import AuthService from "../../../services/AuthService";
+import { useState } from 'react';
+
+
 
 function CadastroCliente() {
 
 
+  const[message, setMessage] = useState(null);
+
   //Utilizando o hook do formik e iniciando valores como strings vazias.
-  const formik = useFormik({
-    initialValues: {
-      nomeCompleto: '',
-      cpf: '',
-      email: '',
-      senha: '',
-    }
-  ,
-  //validando os campos recebidos
-  validationSchema: Yup.object({
-    nomeCompleto: Yup.string().required("Campo de nome completo é requerido").min(6, "O nome é muito curto"),
-    cpf: Yup.number().required("Campo de CPF é requerido, e deve ter apenas números").min(14, "Insira um formato válido").max(14, "Insira um formato válido"),
-    email: Yup.string().required("Campo email é requerido").min(6, "O email é muito curto"),
-    senha: Yup.string().required("Campo senha é requrido").min(3, "A senha é muito curta"),
-  }),
-  onSubmit: (values, actions) => {
-    alert(JSON.stringify(values, null, 2));
-    actions.resetForm();
-  }
-  
-});
+
 
   return (
 
@@ -77,93 +63,115 @@ function CadastroCliente() {
     p="5"
     rounded="2xl"
     src={logo}
-    />
-
-    
+    />  
     </Box>
-    <VStack
-    as="form"
-    mx="auto"
-    my="5rem"
-    w="30%"
-    bgColor="gray.200"
-    p="10"
-    h="fit-content"
-    minH="550px"
-    border="1 px solid teal"
-    rounded="3xl"
-    justifyContent="center"
-    >
+
+    <Flex bg="gray.100" align="center" justify="center" w="30vw" rounded="2xl" ml="20" h="75vh">
+      <Box p={4} h="60vh">
       <Heading>Cadastro de cliente</Heading>
-      <FormControl isInvalid={formik.errors.senha && formik.touched.email}>
-        <FormLabel>Nome completo</FormLabel>
-        <Input
-        name="nomeCompleto"
-        placeholder="Insira aqui seu nome completo"
-        {...formik.getFieldProps("nomeCompleto")
-      }
-      type="text"
-      />
-        <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
-      </FormControl>
+        <br />
+   
+        <Formik
+          initialValues={{
+            nome: "",
+            cpf: "",
+            loginUsuario: "",
+            senhaUsuario: ""
+          }}
+          onSubmit={(values) => {
+            AuthService.register(values.nome, values.cpf, values.loginUsuario, values.senhaUsuario).then(
+              ()=>{
+                console.log("Registro efetuado com sucesso!")
+                window.location.reload();
+              },
+              (error) =>{
+                setMessage("Houve um erro ao cadastrar");
+                console.log(message);
 
-      <FormControl isInvalid={formik.errors.senha && formik.touched.email}>
-        <FormLabel>CPF</FormLabel>
-        <Input
-        name="cpf"
-        placeholder="Insira aqui seu CPF (Apenas números)"
-        {...formik.getFieldProps("cpf")
-      }
-      type="text"
-      />
-        <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
-      </FormControl>
+              }
+            )
+          }}
+        >
+          {({ handleSubmit, errors, touched }) => (
+            <form onSubmit={handleSubmit}>
+              <VStack spacing={4} align="flex-start">
+                <FormControl>
+                  <FormLabel htmlFor="email">Nome completo</FormLabel>
+                  <Field
+                    as={Input}
+                    id="nome"
+                    name="nome"
+                    type="nome"
+                    variant="filled"
+                  />
+                </FormControl>
+                <FormControl isInvalid={!!errors.cpf && touched.cpf}>
+                  <FormLabel htmlFor="cpf">CPF</FormLabel>
+                  <Field
+                    as={Input}
+                    id="cpf"
+                    name="cpf"
+                    variant="filled"
+                    validate={(value) => {
+                      let error;
 
-      <FormControl isInvalid={formik.errors.senha && formik.touched.email}>
-        <FormLabel>Email do usuário</FormLabel>
-        <Input
-        name="Email"
-        placeholder="Email do usuário"
-        {...formik.getFieldProps("email")
-      }
-      type="email"
-      />
-        <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
-      </FormControl>
+                      if (value.length < 13 ) {
+                        error = "O CPF deve conter mais de 13 caracteres";
+                      }
 
-      <FormControl isInvalid={formik.errors.senha && formik.touched.senha}>
-        <FormLabel>Senha do usuário</FormLabel>
-        <Input
-        name="senha"
-        type="password"
-        placeholder="Insira sua senha"
-        {...formik.getFieldProps("senha")}
-        />
-      <FormErrorMessage>{formik.errors.senha}</FormErrorMessage>
+                      return error;
+                    }}
+                  />
+                  <FormErrorMessage>{errors.cpf}</FormErrorMessage>
+                </FormControl>
+                <FormControl>
+                  <FormLabel htmlFor="email">Email</FormLabel>
+                  <Field
+                    as={Input}
+                    id="loginUsuario"
+                    name="loginUsuario"
+                    type="email"
+                    variant="filled"
+                    placeholder="email@email"
+                    
+                  />
+                  <FormErrorMessage>{errors.password}</FormErrorMessage>
+                </FormControl>
 
-      </FormControl>
+                <FormControl isInvalid={!!errors.senhaUsuario && touched.senhaUsuario}>
+                  <FormLabel htmlFor="password">Senha</FormLabel>
+                  <Field
+                    as={Input}
+                    id="senhaUsuario"
+                    name="senhaUsuario"
+                    type="password"
+                    variant="filled"
+                    validate={(value) => {
+                      let error;
 
-      <Button
-        type="submit"
-        variant="solid"
-        colorScheme="orange"
-      >
-        Criar conta
-      </Button>
+                      if (value.length < 5) {
+                        error = "A senha deve conter ao menos 5 caracteres";
+                      }
 
-      <Text
-      fontSize="sm"
-      >
-        Já possui conta? Faça seu login
-      </Text>
-      <Button
-      colorScheme="red"
-
-      >
-        Fazer login
-      </Button>
+                      return error;
+                    }}
+                  />
+                  <FormErrorMessage>{errors.senhaUsuario}</FormErrorMessage>
+                </FormControl>
+          
+                <Button type="submit" colorScheme="orange" width="full">
+                  Cadastrar
+                </Button>
+              </VStack>
+            </form>
+          )}
+        </Formik>
+        
+      </Box>
+      
+    </Flex>
     
-    </VStack>
+    
     </Flex>
     )
 }
