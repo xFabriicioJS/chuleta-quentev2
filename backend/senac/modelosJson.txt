@@ -1,0 +1,16 @@
+{
+   "idClienteReserva": 1,
+   "dataReservada": "15/09/2022 22:00",
+   "nomeClienteReserva": "Fabricio"
+
+}
+
+    //idclientereserva
+    //dataReservada dd/MM/yyyy HH:mm
+    //dataAbertura = dd/MM/yyyy
+    //nomeClientereserva
+
+    {
+        "siglaTipo": "chu",
+        "rotuloTipo": "churrasco"
+    }

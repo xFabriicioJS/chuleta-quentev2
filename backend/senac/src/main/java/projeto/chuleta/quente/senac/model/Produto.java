@@ -9,6 +9,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -24,8 +26,6 @@ public class Produto {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "id_produto")
 	private Long id;
 
-	@Getter @Setter @NotNull @Column(name = "id_tipo_produto")
-	private Long idTipoProduto;
 	
 	@Getter @Setter @NotNull @Size(max = 100) @Column(name = "descri_produto")
 	private String descriProduto;
@@ -42,5 +42,8 @@ public class Produto {
 	@Enumerated(EnumType.STRING) @NotNull @Column(name = "destaque_produto")
 	private DestaqueProduto destaqueProduto = DestaqueProduto.NAO;
 	
-	
+	@ManyToOne
+	@Getter @Setter 
+	@JoinColumn(name="id_tipo_produto", nullable=false)
+	private Tipos tipoProduto; 
 }

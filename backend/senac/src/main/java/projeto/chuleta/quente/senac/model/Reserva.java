@@ -6,13 +6,16 @@ import java.time.LocalDateTime;
 import javax.annotation.Generated;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -30,16 +33,20 @@ import projeto.chuleta.quente.senac.enums.StatusReserva;
 public class Reserva {
     
     @Id
-    @Getter @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter 
     @Column(name = "id_reserva")
-    @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @Getter 
     @JoinColumn(name="id_cliente_reserva", nullable=false)
     private Usuario idClienteReserva;
+
+    @Size(max = 255)
+    @Column(name = "motivo_reserva")
+    private String motivoReserva;
 
     @NotNull
     @Getter 

@@ -19,7 +19,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import javax.validation.constraints.NotBlank;
-
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.br.CPF;
@@ -40,18 +40,18 @@ public class Usuario {
 	@Id @Getter @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "id_usuario")
 	private Long idUsuario;
 	
-	@NotBlank @Getter @Setter @Column(name = "nome_usuario") @Size(max = 55)
+	@NotBlank @Getter @Setter @Column(name = "nome_usuario") @Size(max = 55) @NotNull
 	private String nome;
 
-	@NotBlank @CPF @Getter @Setter @Column(name = "cpf_usuario") @Size(max = 14)
+	@NotBlank @CPF @Getter @Setter @Column(name = "cpf_usuario") @Size(max = 14) @NotNull
 	private String cpf;
 
-	@NotBlank @Getter @Setter @Column(name = "login_usuario")
+	@NotBlank @Getter @Setter @Column(name = "login_usuario") @NotNull
 	private String loginUsuario;
 	
 	
 
-	@NotBlank @Getter @Size(max = 255)
+	@NotBlank @Getter @Size(max = 255) @NotNull
 	@Column(name = "senha_usuario")
 	private String senhaUsuario;
 

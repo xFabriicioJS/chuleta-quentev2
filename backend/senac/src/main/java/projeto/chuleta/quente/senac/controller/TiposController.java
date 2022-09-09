@@ -33,15 +33,17 @@ public class TiposController {
 
 
     @GetMapping
-    public List<Tipos> listarTipos(){
-        return tiposRepository.findAll();
+    public ResponseEntity<List<Tipos>> listarTipos(){
+        List<Tipos> tipos = tiposRepository.findAll();
+        return ResponseEntity.ok(tipos);
     }
+
 
     @PostMapping
     public ResponseEntity<Tipos> adicionarTipo(@RequestBody @Valid Tipos tipo){
         tiposRepository.save(tipo);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(tipo);
     }
 
     @GetMapping("/{id}")

@@ -17,14 +17,24 @@ import Header from "../../reutilizable/Header";
 
 
 export default function App() {
+
+  let navigate =  useNavigate();
+
   const formik = useFormik({
     initialValues: {
       email: "",
-      password: "",
-      rememberMe: false
+      senha: "",
     },
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+        AuthService.login(values.email, values.senha).then(
+          ()=>{
+            console.log("Login efetuado com sucesso!")
+            window.location.reload();
+          },
+          (error) =>{
+            setMessage("Verifique suas credenciais por favor")
+          }
+        )
     }
   });
   return (
@@ -91,15 +101,7 @@ export default function App() {
                 placeholder="*******"
               />
             </FormControl>
-            <Checkbox
-              id="rememberMe"
-              name="rememberMe"
-              onChange={formik.handleChange}
-              isChecked={formik.values.rememberMe}
-              colorScheme="orange"
-            >
-              Lembrar-me?
-            </Checkbox>
+            
             <Button type="submit" colorScheme="orange" width="full">
               Login
             </Button>

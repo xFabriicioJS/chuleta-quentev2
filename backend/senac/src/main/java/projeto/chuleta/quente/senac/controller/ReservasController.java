@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.bind.annotation.RestController;
 
 import projeto.chuleta.quente.senac.Exceptions.ResourceNotFoundException;
@@ -35,11 +35,15 @@ public class ReservasController {
     }
 
     @PostMapping
-    public ResponseEntity<Reserva> adionarReserva(@Valid @RequestBody Reserva reserva ){
-        reservasRepository.save(reserva);
+    public Reserva adionarReserva(@RequestBody Reserva reserva ){
 
-        return ResponseEntity.ok(reserva);
+        return reservasRepository.save(reserva);
+
     }
+
+    //Listando Reservas por usuário
+
+
 
     @PutMapping("/{id}")
     public ResponseEntity<Reserva> atualizarReserva(@PathVariable Long id, @Valid @RequestBody Reserva detailsReserva) {

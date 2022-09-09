@@ -96,7 +96,7 @@ public class ProdutosController {
 		Produto produtoAserAtualizado = produtosRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Produto não encontrado! produto = "+ id));
 
 		produtoAserAtualizado.setDescriProduto(detailsProduto.getDescriProduto());
-		produtoAserAtualizado.setIdTipoProduto(detailsProduto.getIdTipoProduto());
+		produtoAserAtualizado.setTipoProduto(detailsProduto.getTipoProduto());
 		produtoAserAtualizado.setResumoProduto(detailsProduto.getResumoProduto());
 		produtoAserAtualizado.setValorProduto(detailsProduto.getValorProduto());
 
