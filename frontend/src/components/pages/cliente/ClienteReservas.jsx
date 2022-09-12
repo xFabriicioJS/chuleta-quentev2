@@ -17,14 +17,29 @@ import {
     Button,
   } from '@chakra-ui/react'
 
-import {IoIosAddCircle} from 'react-icons/io'  
-import { FiShoppingCart } from 'react-icons/fi'
-import {TbAdjustmentsHorizontal} from 'react-icons/tb'
-import Header from '../../reutilizable/Header'
-import { AiFillDelete } from 'react-icons/ai'
+import {IoIosAddCircle} from 'react-icons/io';
+import { FiShoppingCart } from 'react-icons/fi';
+import {TbAdjustmentsHorizontal} from 'react-icons/tb';
+import Header from '../../reutilizable/Header';
+import { AiFillDelete } from 'react-icons/ai';
 import DrawerMenu from '../../reutilizable/DrawerMenu';
+import {useState} from 'react';
+import { useEffect } from 'react';
+import ReservasService from '../../../services/ReservasService';
+
 
 function ClienteReservas() {
+
+    const [reservas, setReservas] = useState(['']);
+
+    useEffect(()=>{
+        const usuario = JSON.parse(localStorage.getItem('usuario'));
+
+         console.log(usuario.idUsuario);
+         ReservasService.findAllReservasByUserId(usuario.idUsuario).then(response => console.log(response.data));
+
+    },[])
+
 
 
   return (
@@ -63,9 +78,7 @@ function ClienteReservas() {
                             </Th>
                             <Th>
                                 Hora da reserva
-                            </Th>
-                            
-                            
+                            </Th>  
                             <Th>
                                 Data de abertura
                             </Th>
@@ -84,17 +97,30 @@ function ClienteReservas() {
                         </Tr>
                     </Thead>
                     <Tbody>
+                    {reservas.map((reserva)=>{
                         <Tr>
-                            <Td>Teste número</Td>
-                            <Td>Teste data</Td>
-                            <Td>Teste hora</Td>
-                            <Td>Teste dataAbertura</Td>
-                            <Td>Teste número de pessoas</Td>                            
-                            <Td>Teste status</Td>                            
-                            <Td display="flex" justifyContent="center" gap="2">
-                                <Button leftIcon={<TbAdjustmentsHorizontal/>} colorScheme="green">Visualizar</Button>
-                            </Td>
+                            <Th>
+                                {reserva.id}
+                            </Th>
+                            <Th>
+                                {reserva.dataReservada}
+                            </Th>
+                            <Th>
+                                {reserva.dataReservada
+                                //usar o split para pegar a data
+                                }
+                            </Th>
+                            <Th>
+                                {reserva.dataAbertura}
+                            </Th>
+                            <Th>
+                                Não tem
+                            </Th>
+                                <Th>
+                                    {reserva.status}      
+                                </Th>
                         </Tr>
+                    })}
                     </Tbody>
             </Table>
         </TableContainer>

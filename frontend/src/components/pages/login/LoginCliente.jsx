@@ -36,7 +36,7 @@ export default function App() {
         AuthService.login(values.email, values.senha).then(
           ()=>{
             console.log("Login efetuado com sucesso!")
-            window.location.reload();
+
           },
           (error) =>{
             setMessage("Verifique suas credenciais por favor");

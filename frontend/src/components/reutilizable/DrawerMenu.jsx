@@ -2,13 +2,28 @@ import { Box, Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, Draw
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import {GiHamburgerMenu} from 'react-icons/gi'
+import { useEffect } from 'react'
+import AuthService from '../../services/AuthService'
 
 function DrawerMenu() {
 
     const { isOpen, onOpen, onClose } = useDisclosure()
-    // const [currentUser, setCurrentUser] = useState(undefined);
-    // const [showAdminBoard, setShowAdminBoard] = useState(false);
+    const [currentUser, setCurrentUser] = useState(undefined);
+    const [showAdminBoard, setShowAdminBoard] = useState(false);
   
+
+
+    useEffect(()=>{
+      const user = AuthService.getCurrentUser();
+
+      if(user){
+        setCurrentUser(user);
+        if(user.roles.includes("ROLE_ADMIN")){
+          setShowAdminBoard(true);
+        }
+      }
+        
+    },[])
 
 
   return (
@@ -26,7 +41,7 @@ function DrawerMenu() {
     <DrawerContent>
       <DrawerCloseButton />
       <DrawerHeader>
-      <Heading my="6">Seja muito bem-vindo! Admin</Heading>
+      <Heading my="6">Seja muito bem-vindo</Heading>
       </DrawerHeader>
 
       <DrawerBody>
@@ -37,45 +52,33 @@ function DrawerMenu() {
         </Link>
         </Button>
 
-        <Button mr={3} colorScheme="linkedin" rounded="2xl" size="lg" width="full">
-        <Link to={"/"}>
-           Produtos
-        </Link>
-        </Button>
         <Button mr={3} colorScheme="orange" rounded="2xl" size="lg" width="full">
         <Link to={"/"}>
             Reservas
         </Link>
         </Button>
-        <Button mr={3} colorScheme="whatsapp" rounded="2xl" size="lg" width="full">
-        <Link to={"/"}>
-            Tipos
-        </Link>
-        </Button>
-        <Button mr={3} colorScheme="teal" rounded="2xl" size="lg" width="full">
-        <Link to={"/"}>
-          Usuários
-        </Link>
-        </Button>
-        
-        {/* {currentUser && (<Link to={"/user"} className="nav-link">
-          <Button mr={3} colorScheme="teal" rounded="2xl" size="lg" width="full">
+
+        {showAdminBoard && (
+          <>
+            <Button mr={3} colorScheme="linkedin" rounded="2xl" size="lg" width="full">
+            <Link to={"/"}>
+              Produtos
+            </Link>
+            </Button>
+
+            <Button mr={3} colorScheme="whatsapp" rounded="2xl" size="lg" width="full">
+            <Link to={"/"}>
+                Tipos
+            </Link>
+            </Button>
+            <Button mr={3} colorScheme="teal" rounded="2xl" size="lg" width="full">
+            <Link to={"/"}>
+              Usuários
+            </Link>
+            </Button>
+        </>
+)}
           
-            Meus chamados
-          
-          </Button>
-          </Link>
-      )} */}
-        
-        
-        {/* {showAdminBoard && (
-          <Button variant="outline" mr={3} colorScheme="green" rounded="2xl" size="lg">
-          <Link to={"/admin"}>
-            Admin Board
-          </Link>
-          </Button>
-      )} */}
-       
         </Box>
       </DrawerBody>
         <DrawerFooter display="flex-start">

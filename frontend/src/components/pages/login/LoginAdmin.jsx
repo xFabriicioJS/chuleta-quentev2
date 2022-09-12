@@ -12,9 +12,19 @@ import {
 } from "@chakra-ui/react";
 import {MdAdminPanelSettings} from 'react-icons/md/';
 import background from '../../../images/backgroundLogin.jpg';
+import AuthService from "../../../services/AuthService";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import AlertError from "../../reutilizable/AlertError";
 
 
 export default function App() {
+
+
+  const [message, setMessage] = useState(null);
+
+  let navigate = useNavigate();
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -22,7 +32,26 @@ export default function App() {
       rememberMe: false
     },
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      AuthService.login(values.email, values.password).then(
+        ()=>{
+          console.log("Login efetuado com sucesso!")
+         //Lógica para verificar se o usuário é administrador
+
+          let currentUser = AuthService.getCurrentUser();
+          console.log(currentUser)
+          if(currentUser.roles.includes("ROLE_ADMIN")){
+            console.log("usuário com acesso")
+            navigate("/admin");
+          }else{
+            setMessage("Você não tem acesso aos recursos de administrador.")
+            localStorage.removeItem("usuario");
+          }
+        },
+        (error) =>{
+          setMessage("Verifique suas credenciais por favor");
+        
+        }
+      )
     }
   });
   return (
@@ -78,8 +107,8 @@ export default function App() {
             <FormControl>
               <FormLabel htmlFor="password">Senha</FormLabel>
               <Input
-                id="senha"
-                name="senha"
+                id="password"
+                name="password"
                 type="password"
                 variant="filled"
                 onChange={formik.handleChange}
@@ -87,18 +116,14 @@ export default function App() {
                 placeholder="*******"
               />
             </FormControl>
-            <Checkbox
-              id="rememberMe"
-              name="rememberMe"
-              onChange={formik.handleChange}
-              isChecked={formik.values.rememberMe}
-              colorScheme="orange"
-            >
-              Lembrar-me?
-            </Checkbox>
             <Button type="submit" colorScheme="orange" width="full">
               Login
             </Button>
+            <Box w="full">
+              {
+                message && <AlertError message={message}/> 
+              }
+            </Box>
           </VStack>
         </form>
       </Box>

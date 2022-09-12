@@ -74,6 +74,10 @@ public class AuthController {
         if(usuariosRepository.existsByLoginUsuario(signupRequest.getLoginUsuario())){
             return ResponseEntity.badRequest().body(new MessageResponse("Ocorreu um erro, esse usuário já existe na nossa base de dados."));
         }
+        if(usuariosRepository.existsByCpf(signupRequest.getCpf())){
+            return ResponseEntity.badRequest().body(new MessageResponse("Este CPF já existe em nossa base de dados."));
+        }
+        
         
         //Criando novo usuário
         Usuario usuario = new Usuario(signupRequest.getNome(), signupRequest.getCpf(), signupRequest.getLoginUsuario(), encoder.encode(signupRequest.getSenhaUsuario()));

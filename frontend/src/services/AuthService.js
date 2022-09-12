@@ -21,7 +21,8 @@ const login = (loginUsuario, senhaUsuario) => {
         loginUsuario,
         senhaUsuario
     }).then((response) => {
-        if(response.data.accessToken){
+        
+        if(response.data.token){
             localStorage.setItem("usuario", JSON.stringify(response.data))
         }
         return response.data

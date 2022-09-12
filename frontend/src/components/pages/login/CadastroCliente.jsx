@@ -17,6 +17,8 @@ import logo from '../../../images/logochurrascopequeno.png';
 import costelona from '../../../images/costelona.jpg';
 import AuthService from "../../../services/AuthService";
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import AlertError from '../../reutilizable/AlertError';
 
 
 
@@ -27,6 +29,7 @@ function CadastroCliente() {
 
   //Utilizando o hook do formik e iniciando valores como strings vazias.
 
+  let navigate = useNavigate();
 
   return (
 
@@ -66,8 +69,8 @@ function CadastroCliente() {
     />  
     </Box>
 
-    <Flex bg="gray.100" align="center" justify="center" w="30vw" rounded="2xl" ml="20" h="75vh">
-      <Box p={4} h="60vh">
+    <Flex bg="gray.100" align="center" justify="center" w="30vw" rounded="2xl" ml="20" h="80vh">
+      <Box px={4} h="60vh">
       <Heading>Cadastro de cliente</Heading>
         <br />
    
@@ -81,13 +84,11 @@ function CadastroCliente() {
           onSubmit={(values) => {
             AuthService.register(values.nome, values.cpf, values.loginUsuario, values.senhaUsuario).then(
               ()=>{
-                console.log("Registro efetuado com sucesso!")
-                window.location.reload();
+               navigate("/cliente/login")
               },
               (error) =>{
-                setMessage("Houve um erro ao cadastrar");
-                console.log(message);
-
+                console.log(error);
+              
               }
             )
           }}
@@ -102,7 +103,7 @@ function CadastroCliente() {
                     id="nome"
                     name="nome"
                     type="nome"
-                    variant="filled"
+                    variant="outline"
                   />
                 </FormControl>
                 <FormControl isInvalid={!!errors.cpf && touched.cpf}>
@@ -111,12 +112,12 @@ function CadastroCliente() {
                     as={Input}
                     id="cpf"
                     name="cpf"
-                    variant="filled"
+                    variant="outline"
                     validate={(value) => {
                       let error;
 
-                      if (value.length < 13 ) {
-                        error = "O CPF deve conter mais de 13 caracteres";
+                      if (value.length != 11) {
+                        error = "O campo CPF conter exatos 11 caracteres, e não deve possuir traços e pontos.";
                       }
 
                       return error;
@@ -131,7 +132,7 @@ function CadastroCliente() {
                     id="loginUsuario"
                     name="loginUsuario"
                     type="email"
-                    variant="filled"
+                    variant="outline"
                     placeholder="email@email"
                     
                   />
@@ -145,7 +146,7 @@ function CadastroCliente() {
                     id="senhaUsuario"
                     name="senhaUsuario"
                     type="password"
-                    variant="filled"
+                    variant="outline"
                     validate={(value) => {
                       let error;
 
@@ -162,6 +163,12 @@ function CadastroCliente() {
                 <Button type="submit" colorScheme="orange" width="full">
                   Cadastrar
                 </Button>
+                <Box w="full">
+                    {
+                      message && <AlertError message={message}/> 
+                    }
+                </Box>
+
               </VStack>
             </form>
           )}
