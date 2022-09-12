@@ -23,10 +23,10 @@ const getReservaById = (id) => {
     return axios.get(`${URL_API}/${id}`, {headers : AuthHeader()});
 }
 
-const addReserva = () => {
+const addReserva = (reserva) => {
 
     //Requisição para fazer um post de uma única reserva
-    return axios.post(URL_API, {headers : AuthHeader()});
+    return axios.post(URL_API, reserva, {headers : AuthHeader()});
 }
 
 

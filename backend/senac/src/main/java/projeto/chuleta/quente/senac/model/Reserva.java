@@ -44,6 +44,7 @@ public class Reserva {
     @JoinColumn(name="id_cliente_reserva", nullable=false)
     private Usuario idClienteReserva;
 
+    @Getter
     @Size(max = 255)
     @Column(name = "motivo_reserva")
     private String motivoReserva;
@@ -69,7 +70,9 @@ public class Reserva {
     @Column(name = "status_reserva")
     private StatusReserva statusReserva = StatusReserva.EM_ANALISE;
 
-
+    @Getter
+    @Column(name = "nDePessoas_reserva")
+    private Integer nDePessoasReserva;
 
 
 }

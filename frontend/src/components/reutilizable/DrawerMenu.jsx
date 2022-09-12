@@ -22,14 +22,15 @@ function DrawerMenu() {
           setShowAdminBoard(true);
         }
       }
-        
+    
+      
+    
     },[])
 
 
   return (
     <Box 
     padding="4" display="flex" justifyContent="space-between"
-
     >
     <Button onClick={onOpen}><GiHamburgerMenu style={{fontSize: '30px'}}/></Button>
     <Drawer
@@ -53,7 +54,7 @@ function DrawerMenu() {
         </Button>
 
         <Button mr={3} colorScheme="orange" rounded="2xl" size="lg" width="full">
-        <Link to={"/"}>
+        <Link to={currentUser?.roles.includes('ROLE_ADMIN') ? '/admin/reservas' : '/cliente/reservas'}>
             Reservas
         </Link>
         </Button>

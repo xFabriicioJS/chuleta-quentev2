@@ -17,6 +17,7 @@ import AdminReservas from "./components/pages/admin/AdminReservas";
 import ClienteReservas from './components/pages/cliente/ClienteReservas';
 import AlterarTipo from './components/pages/admin/AlterarTipo'
 import AlterarProduto from "./components/pages/admin/AlterarProduto";
+import VisualizarReserva from './components/pages/cliente/VisualizarReserva';
 
 function App() {
 
@@ -42,6 +43,7 @@ function App() {
           <Route path="/admin/tipos" element={<AdminTipos/>} />
           <Route path="/admin/reservas" element={<AdminReservas/>} />
           <Route path="/cliente/reservas" element={<ClienteReservas/>} />
+          <Route path="/cliente/reservas/:id" element={<VisualizarReserva/>} />
           <Route path="/admin/reservas/alterar" element={<AlterarTipo/>} />
           {/*          <Route path="/destaques" element={<Destaques/>} />
           <Route path="/buscaProduto" element={<BuscaProduto/>} />

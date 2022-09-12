@@ -1,6 +1,6 @@
-import react from 'react';
+import React from 'react';
 import {useState} from 'react';
-import { useFormik } from "formik";
+
 import {
   Box,
   Button,
@@ -9,10 +9,7 @@ import {
   FormControl,
   FormLabel,
   Heading,
-  Input,
-  Radio,
-  Select,
-  Stack,
+
   VStack,
   RadioGroup,
   Textarea,
@@ -21,7 +18,16 @@ import {
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
-  Drawer
+  Drawer,
+  useDisclosure,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalFooter,
+  ModalBody,
+  Text,
+  ModalOverlay
 } from "@chakra-ui/react";
 import { AiFillLeftCircle } from "react-icons/ai";
 import DrawerMenu from '../../reutilizable/DrawerMenu';
@@ -32,34 +38,67 @@ import "react-datepicker/dist/react-datepicker.css";
 export default function AdicionarProduto() {
 
 
+  const OverlayOne = () => (
+    <ModalOverlay
+      bg='blackAlpha.300'
+      backdropFilter='blur(10px) hue-rotate(90deg)'
+    />
+  )
 
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-      rememberMe: false
-    },
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-    }
-  });
-  const format = (val) => `$` + val
-  const parse = (val) => val.replace(/^\$/, '')
-
-  const [value, setValue] = useState('1.99');
+  const OverlayTwo = () => (
+    <ModalOverlay
+      bg='none'
+      backdropFilter='auto'
+      backdropInvert='80%'
+      backdropBlur='2px'
+    />
+  )
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [overlay, setOverlay] = useState(<OverlayOne />)
   const [date, setDate] = useState(new Date());
+  const [nDePessoasReserva, setNDePessoasReserva] = useState(0);
+  const [motivoReserva, setMotivoReserva] = useState("");
 
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setOverlay(<OverlayOne />);
+    onOpen();
+
+
+    let dataFormatada = (('0' + (date.getDate())).slice(-2) + '/' + ('0' + (date.getMonth()+1)).slice(-2) + '/' + 
+    date.getFullYear() + ' ' + ('0' + (date.getHours())).slice(-2) + ':' + ('0' + (date.getMinutes())).slice(-2) + ':' + ('0' + (date.getSeconds())).slice(-2));
+
+
+    console.log(dataFormatada);
+    console.log(nDePessoasReserva);
+    console.log(motivoReserva);
+
+
+    let reserva = {
+
+      
+    }
+
+  }
+
+  
+
+
+  
 
  
 
   return (
     <Box
     bg="gray.100"
+    h="100vh"
     >
     
    <DrawerMenu/>
    
-    <Flex bg="gray.100" align="center" justify="center" h="100vh">
+    <Flex bg="gray.100" align="center" justify="center" h="80vh">
       
       <Box bg="white" p={4} rounded="md" w="50vw">
         <Box
@@ -78,72 +117,70 @@ export default function AdicionarProduto() {
             Agendando nova reserva
           </Heading>
         </Box>
-        <form onSubmit={formik.handleSubmit}>
+        
           <VStack spacing={4} align="flex-start">
             <FormControl>
-              <FormLabel htmlFor="tipo">Data pretendida da reserva</FormLabel>
+              <FormLabel htmlFor="tipo">Data e hora pretendida da reserva</FormLabel>
               <DatePicker
                 timeInputLabel="Horário:"
                 dateFormat="dd/MM/yyyy h:mm aa"        
                 showTimeSelect
                 required 
+                autoFocus="true"
+                disabledKeyboardNavigation
                 selected={date}
                 onChange={(date) => setDate(date)}
                 />
 
             </FormControl>
+          
             <FormControl>
-              <FormLabel htmlFor="destaque">Destaque</FormLabel>
-              <RadioGroup defaultValue='2'>
-                <Stack spacing={5} direction='row'>
-                  <Radio colorScheme='green' value='Sim'>
-                    Sim
-                  </Radio>
-                  <Radio colorScheme='red' value='Nao'>
-                    Não
-                  </Radio>
-                </Stack>
-              </RadioGroup>
-            </FormControl>
-            <FormControl>
-              <FormLabel htmlFor="descricao">Descrição</FormLabel>
-              <Input
-              name="descricao"
-              placeholder="Insira aqui uma descrição para o novo produto"
-              {...formik.getFieldProps("produto")
-            }
-            type="text"
-              />
-            </FormControl>
-            <FormControl>
-              <FormLabel htmlFor="resumo">Resumo</FormLabel>
+              <FormLabel htmlFor="descricao">Número de pessoas</FormLabel>
+              <NumberInput
+              defaultValue={nDePessoasReserva} min={1} max={10}
+              onChange={(event)=>setNDePessoasReserva(event)}
+              value={nDePessoasReserva}
+              >
+                <NumberInputField />
+                <NumberInputStepper>
+                  <NumberIncrementStepper />
+                  <NumberDecrementStepper />
+                </NumberInputStepper>
+             </NumberInput>
 
+            </FormControl>
+            <FormControl>
+              <FormLabel htmlFor="resumo">Motivo da reserva</FormLabel>
               <Textarea
-              name="resumo"
-              placeholder="Insira aqui um resumo sobre o produto"
-              {...formik.getFieldProps("resumo")}
+              id="motivoReserva"
+              name="motivoReserva"
+              type="text"
+              onChange={(e)=>setMotivoReserva(e.target.value)}
+              value={motivoReserva}
               >
               </Textarea>
             </FormControl>
-            <FormControl>
-              <FormLabel htmlFor="valor">Valor do produto</FormLabel>
-              <NumberInput
-               value={format(value)}
-             onChange={(valueString) => setValue(parse(valueString))}
-               
-               >
-          <NumberInputField />
-        <NumberInputStepper>
-          <NumberIncrementStepper />
-          <NumberDecrementStepper />
-        </NumberInputStepper>
-          </NumberInput>
-            </FormControl>
-            <Button type="submit" colorScheme="orange" width="full">
-              Inserir novo produto
+          
+            <Button type="submit" colorScheme="orange" width="full" onClick={(e) => {
+              handleSubmit(e);
+        }}>
+              Adicionar solicitação de reserva
             </Button>
+            <Modal isCentered isOpen={isOpen} onClose={onClose}>
+        {overlay}
+        <ModalContent>
+          <ModalHeader>A sua solicitação foi encaminhada!</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text>Acompanhe pelo site ou pelo seu e-mail para verificar o andamento da sua solicitação, em breve enviaremos um retorno.</Text>
+          </ModalBody>
+          <ModalFooter>
+            <Button colorScheme="orange" onClick={onClose}>Voltar as minhas reservas</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
           </VStack>
-        </form>
+    
       </Box>
     </Flex>
     </Box>

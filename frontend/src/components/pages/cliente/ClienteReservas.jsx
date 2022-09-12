@@ -26,19 +26,25 @@ import DrawerMenu from '../../reutilizable/DrawerMenu';
 import {useState} from 'react';
 import { useEffect } from 'react';
 import ReservasService from '../../../services/ReservasService';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 function ClienteReservas() {
 
-    const [reservas, setReservas] = useState(['']);
+    let navigate = useNavigate();
+    const [reservas, setReservas] = useState([]);
 
     useEffect(()=>{
         const usuario = JSON.parse(localStorage.getItem('usuario'));
 
          console.log(usuario.idUsuario);
-         ReservasService.findAllReservasByUserId(usuario.idUsuario).then(response => console.log(response.data));
+         ReservasService.findAllReservasByUserId(usuario.idUsuario).then(response => setReservas(response.data));
 
     },[])
+
+    const handleView = (id) => {
+        navigate(`${id}`, {state : {id}})
+    }
 
 
 
@@ -90,36 +96,50 @@ function ClienteReservas() {
                                 Status da reserva
                             </Th>
                             <Th display="flex" justifyContent="center">
+
+                                <Link to="/cliente/adicionar-reserva">
                                 <Button colorScheme="orange" leftIcon={<IoIosAddCircle/>}>
                                     Adicionar
                                 </Button>
+                                </Link>
                             </Th>
                         </Tr>
                     </Thead>
                     <Tbody>
                     {reservas.map((reserva)=>{
-                        <Tr>
-                            <Th>
+                        console.log(reserva.id);
+
+                        return(
+                            <Tr>
+                            <Td>
                                 {reserva.id}
-                            </Th>
-                            <Th>
+                            </Td>
+                            <Td>
                                 {reserva.dataReservada}
-                            </Th>
-                            <Th>
-                                {reserva.dataReservada
-                                //usar o split para pegar a data
+                            </Td>
+                            <Td >
+                                {reserva.dataReservada.substring(11)
+                                //usar o split para pegar o
                                 }
-                            </Th>
-                            <Th>
+                            </Td>
+                            <Td>
                                 {reserva.dataAbertura}
-                            </Th>
-                            <Th>
+                            </Td>
+                            <Td>
                                 Não tem
-                            </Th>
-                                <Th>
-                                    {reserva.status}      
-                                </Th>
+                            </Td>
+                                <Td>
+                                    {reserva.statusReserva.includes("APROVADO") ? <Button colorScheme="green" rounded="2xl">APROVADO</Button> : <Button>
+                                        {reserva.statusReserva.replace("_", " ")}
+                                    </Button>}
+                                </Td>
+                                <Td display="flex" justifyContent="center">
+                                    <Button onClick={()=>handleView(reserva.id)} colorScheme="green">
+                                        Visualizar
+                                    </Button>
+                                </Td>
                         </Tr>
+                        )
                     })}
                     </Tbody>
             </Table>
