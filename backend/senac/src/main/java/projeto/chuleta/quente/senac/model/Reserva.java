@@ -70,7 +70,7 @@ public class Reserva {
     @Column(name = "status_reserva")
     private StatusReserva statusReserva = StatusReserva.EM_ANALISE;
 
-    @Getter
+    @Getter @Setter
     @Column(name = "nDePessoas_reserva")
     private Integer nDePessoasReserva;
 

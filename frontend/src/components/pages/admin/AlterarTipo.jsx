@@ -1,4 +1,4 @@
-import react from 'react';
+
 import {useState} from 'react';
 import { useFormik } from "formik";
 import {
@@ -9,30 +9,54 @@ import {
   FormLabel,
   Heading,
   Input,
-
+  useToast,
   VStack,
 
 } from "@chakra-ui/react";
 import { AiFillLeftCircle } from "react-icons/ai";
 import DrawerMenu from '../../reutilizable/DrawerMenu';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import TiposService from '../../../services/TiposService';
+import { useEffect } from 'react';
 
 export default function AdicionarTipo() {
 
+  const [loading,setLoading] = useState(true);
+  const [tipo, setTipo] = useState(null);
+  const [rotulo, setRotulo] = useState('');
+  const [sigla, setSigla] = useState('');
+  const toast = useToast();
 
 
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-      rememberMe: false
-    },
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-    }
+
+  //Hook responsável por armazenar id que virá
+  let location = useLocation();
+  let navigate = useNavigate();
+
+  useEffect(()=>{
+    TiposService.getTipoById(location.state.id).then(response => setTipo(response.data));
+    console.log(tipo);
+    setLoading(false);
+    console.log(loading);
+  },[])
+
+
+
+  const atualizarTipo = (e) => { 
+  e.preventDefault();
+  let tipo = {
+    "siglaTipo": sigla,
+    "rotuloTipo": rotulo
+  }
+  TiposService.atualizarTipo(location.state.id,tipo);
+  toast({
+    title: "Tipo atualizado com sucesso.",
+    status: 'success',
+    isClosable: true,
   });
-
-
-  return (
+  navigate("/admin/tipos");
+  }
+   return (
     <Box
     h="100vh"
     bg="gray.100"
@@ -50,36 +74,38 @@ export default function AdicionarTipo() {
         display='flex'
         mb="10"
         >
-        <AiFillLeftCircle
-        fontSize={'50px'}
-        />
+        <Link to={"/admin/tipos"}>
+               <AiFillLeftCircle
+               className='iconVoltar'
+               fontSize={'50px'}
+               />
+             </Link>
           <Heading
           ml="4"
           >
-            Atualizando tipo blablabla vc sabe oq fazer
+            Atualizando tipo 
           </Heading>
         </Box>
-        <form onSubmit={formik.handleSubmit}>
+        <form onSubmit={atualizarTipo}>
           <VStack spacing={4} align="flex-start">
             <FormControl htmlFor="rotulo">
-              <FormLabel>Rótulo do tipo</FormLabel>
+              <FormLabel>Novo rótulo do tipo</FormLabel>
 
               <Input
               name="rotulo"
-              placeholder="Insira aqui um novo rótulo"
-              {...formik.getFieldProps("rotulo")
-            }
-            type="text"
+              placeholder="teste"
+              defaultValue={tipo?.rotuloTipo}
+              onChange={(e) => setRotulo(e.target.value)}              
+              type="text"
               />
             </FormControl>
             <FormControl>
-              <FormLabel htmlFor="sigla">Sigla do tipo</FormLabel>
+              <FormLabel htmlFor="sigla">Nova sigla do tipo</FormLabel>
              <Input
              name="sigla"
-             placeholder="Insira apenas 3 caracteres para o tipo"
-             {...formik.getFieldProps("tipo")
-             
-           }
+             placeholder="teste"
+             defaultValue={tipo?.siglaTipo}
+              onChange={(e) => setSigla(e.target.value)}
            maxLength={3}
            type="text"
              />

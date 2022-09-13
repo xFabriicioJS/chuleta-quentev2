@@ -3,9 +3,13 @@ import React from 'react'
 import {Box, Flex, Button, Heading, Text, ButtonGroup} from '@chakra-ui/react'
 import DrawerMenu from '../../reutilizable/DrawerMenu';
 import background from '../../../images/backgroundLogin.jpg';
+import { useNavigate } from 'react-router-dom';
 
 
 function Admin() {
+
+    let navigate = useNavigate();
+
   return (
     <Box
     bgImage={background}
@@ -24,16 +28,16 @@ function Admin() {
             <Box textAlign={'center'} w="25%" bgColor="red.100" p="8" rounded="2xl" >
                 <Text fontSize="2xl">Produtos</Text>
                 <ButtonGroup mt="2">
-                    <Button colorScheme="teal">Listar</Button>
-                    <Button colorScheme="green">Inserir</Button>
+                    <Button colorScheme="teal" onClick={()=>navigate("/admin/produtos")}>Listar</Button>
+                    <Button colorScheme="green" onClick={()=>navigate("/admin/adicionar-produto")}>Inserir</Button>
                 </ButtonGroup>
             </Box>
             
             <Box textAlign={'center'} w="25%" bgColor="green.100" p="8" rounded="2xl" >
                 <Text fontSize="2xl">Tipos</Text>
                 <ButtonGroup mt="2">
-                    <Button colorScheme="teal">Listar</Button>
-                    <Button colorScheme="green">Inserir</Button>
+                    <Button colorScheme="teal" onClick={()=>navigate("/admin/tipos")}>Listar</Button>
+                    <Button colorScheme="green" onClick={()=>navigate("/admin/adicionar-tipo")}>Inserir</Button>
                 </ButtonGroup>
             </Box>
             

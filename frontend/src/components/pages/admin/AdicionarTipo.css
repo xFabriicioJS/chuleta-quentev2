@@ -1,0 +1,7 @@
+.iconVoltar:hover {
+    color: orange;
+}
+
+.iconVoltar {
+    transition: 0.3s;
+}

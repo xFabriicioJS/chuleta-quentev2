@@ -4,54 +4,69 @@ import { useFormik } from "formik";
 import {
   Box,
   Button,
-  Checkbox,
   Flex,
   FormControl,
   FormLabel,
   Heading,
   Input,
-  Radio,
-  Select,
-  Stack,
-  VStack,
-  RadioGroup,
-  Textarea,
-  NumberInputField,
-  NumberInput,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
-  Drawer
+  useToast,
+  VStack
 } from "@chakra-ui/react";
 import { AiFillLeftCircle } from "react-icons/ai";
 import DrawerMenu from '../../reutilizable/DrawerMenu';
+import { Link, useNavigate } from 'react-router-dom';
+import "./AdicionarTipo.css";
+import TiposService from '../../../services/TiposService';
+import AlertError from '../../reutilizable/AlertError';
+import background from '../../../images/backgroundLogin.jpg';
+
 
 export default function AdicionarTipo() {
 
+  const [message, setMessage] = useState(null);
 
+  const toast = useToast();
+
+  let navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
-      email: "",
-      password: "",
-      rememberMe: false
+      rotulo: "",
+      sigla: "",    
     },
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+
+      let tipo = {
+        "siglaTipo": values.sigla,
+        "rotuloTipo": values.rotulo
+      }
+      TiposService.adicionarTipo(tipo);
+      toast({
+        title: "Tipo adicionado com sucesso.",
+        status: 'success',
+        isClosable: true,
+      })
+
+      
     }
   });
 
 
   return (
     <Box
-    bg="gray.100"
+    h="100vh"
+    bgImage={background}
+    backgroundRepeat="no-repeat"
+    backgroundPosition="center"
+    background="cover"
     >
+      {message && <AlertError message={message} />}
     
    <DrawerMenu/>
    
-    <Flex bg="gray.100" align="center" justify="center" h="100vh">
+    <Flex  align="center" justify="center">
       
-      <Box bg="white" p={4} rounded="md" w="50vw">
+      <Box bg="white" p={4} rounded="md" w="40vw">
         <Box
         w="50w"
         rounded="3xl"
@@ -59,9 +74,15 @@ export default function AdicionarTipo() {
         display='flex'
         mb="10"
         >
-        <AiFillLeftCircle
-        fontSize={'50px'}
-        />
+          <Link to={"/admin/tipos"}>
+               
+                <AiFillLeftCircle
+                className='iconVoltar'
+                fontSize={'50px'}
+                />
+              
+              </Link> 
+        
           <Heading
           ml="4"
           >
@@ -79,6 +100,7 @@ export default function AdicionarTipo() {
               {...formik.getFieldProps("rotulo")
             }
             type="text"
+            maxLength={15}
               />
             </FormControl>
             <FormControl>
@@ -86,7 +108,7 @@ export default function AdicionarTipo() {
              <Input
              name="sigla"
              placeholder="Insira apenas 3 caracteres para o tipo"
-             {...formik.getFieldProps("tipo")
+             {...formik.getFieldProps("sigla")
              
            }
            maxLength={3}

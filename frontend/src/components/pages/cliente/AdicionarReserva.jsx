@@ -4,21 +4,21 @@ import {useState} from 'react';
 import {
   Box,
   Button,
-  Checkbox,
+
   Flex,
   FormControl,
   FormLabel,
   Heading,
 
   VStack,
-  RadioGroup,
+
   Textarea,
   NumberInputField,
   NumberInput,
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
-  Drawer,
+
   useDisclosure,
   Modal,
   ModalContent,
@@ -33,6 +33,8 @@ import { AiFillLeftCircle } from "react-icons/ai";
 import DrawerMenu from '../../reutilizable/DrawerMenu';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import AuthService from '../../../services/AuthService';
+import ReservasService from '../../../services/ReservasService';
 
 
 export default function AdicionarProduto() {
@@ -68,19 +70,38 @@ export default function AdicionarProduto() {
 
 
     let dataFormatada = (('0' + (date.getDate())).slice(-2) + '/' + ('0' + (date.getMonth()+1)).slice(-2) + '/' + 
-    date.getFullYear() + ' ' + ('0' + (date.getHours())).slice(-2) + ':' + ('0' + (date.getMinutes())).slice(-2) + ':' + ('0' + (date.getSeconds())).slice(-2));
+    date.getFullYear() + ' ' + ('0' + (date.getHours())).slice(-2) + ':' + ('0' + (date.getMinutes())).slice(-2));
 
 
     console.log(dataFormatada);
     console.log(nDePessoasReserva);
     console.log(motivoReserva);
 
+    // {
+    //   "idClienteReserva": {
+    //     "idUsuario": "1" 
+    //   },
+    //   "motivoReserva": "Teste aniversário",
+    //   "dataReservada": "12/09/2022 17:00",
+    //   "nomeClienteReserva": "Fabricio",
+    //   "ndePessoasReserva": "8"
+    // }
+
+
+    const usuario = JSON.parse(localStorage.getItem('usuario'));
+
 
     let reserva = {
-
-      
+      "idClienteReserva": {
+        "idUsuario": usuario.idUsuario
+      },
+      "motivoReserva": motivoReserva,
+      "dataReservada": dataFormatada,
+      "nomeClienteReserva": "Teste",
+      "ndePessoasReserva": nDePessoasReserva
     }
 
+     ReservasService.addReserva(reserva);
   }
 
   
@@ -123,7 +144,7 @@ export default function AdicionarProduto() {
               <FormLabel htmlFor="tipo">Data e hora pretendida da reserva</FormLabel>
               <DatePicker
                 timeInputLabel="Horário:"
-                dateFormat="dd/MM/yyyy h:mm aa"        
+                dateFormat="dd/MM/yyyy h:mm"        
                 showTimeSelect
                 required 
                 autoFocus="true"
