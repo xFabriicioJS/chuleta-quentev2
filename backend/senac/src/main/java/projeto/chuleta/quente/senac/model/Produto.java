@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -46,4 +47,10 @@ public class Produto {
 	@Getter @Setter 
 	@JoinColumn(name="id_tipo_produto", nullable=false)
 	private Tipos tipoProduto; 
+
+	@OneToOne
+	@Getter @Setter
+	@JoinColumn(name="id_imagem_produto")
+	private FileDB imagemProduto;
+	
 }

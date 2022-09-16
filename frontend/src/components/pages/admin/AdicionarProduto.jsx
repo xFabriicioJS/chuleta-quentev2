@@ -21,30 +21,50 @@ import {
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
-  Drawer
+  Drawer,
+  Switch
 } from "@chakra-ui/react";
 import { AiFillLeftCircle } from "react-icons/ai";
 import DrawerMenu from '../../reutilizable/DrawerMenu';
+import { useEffect } from 'react';
+import TiposService from '../../../services/TiposService';
 
 export default function AdicionarProduto() {
 
-
-
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-      rememberMe: false
-    },
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-    }
-  });
   const format = (val) => `$` + val
   const parse = (val) => val.replace(/^\$/, '')
 
-  const [value, setValue] = useState('1.53')
+  const [value, setValue] = useState('1.99')
+  const [tipos, setTipos] = useState([]);
+  const [tipo, setTipo] = useState('');
+  const [destaque, setDestaque] = useState(false);
+  const [descricao, setDescricao] = useState(['']);
+  const [resumo, setResumo] = useState('');
 
+
+  useEffect(()=>{
+      TiposService.listarTipos().then(response => setTipos(response.data));
+
+    },[])
+
+
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      console.log(value);
+      console.log(tipo);
+      console.log(destaque);
+      console.log(descricao);
+      console.log(resumo);
+
+    }
+
+    const handleSwitch = () => {
+      setDestaque(!destaque);
+    }
+
+    const handleSelect = (e) => {
+      setTipo(e.target.value);
+    }
   return (
     <Box
     h="100vh"
@@ -72,7 +92,7 @@ export default function AdicionarProduto() {
             Inserindo produtos
           </Heading>
         </Box>
-        <form onSubmit={formik.handleSubmit}>
+        <form>
           <VStack spacing={4} align="flex-start">
             <FormControl>
               <FormLabel htmlFor="tipo">Tipo</FormLabel>
@@ -81,10 +101,12 @@ export default function AdicionarProduto() {
                 
                 borderColor='orange'
                 placeholder='Tipo'
-              >
-                 <option value='option1'>Option 1</option>
-                <option value='option2'>Option 2</option>
-                <option value='option3'>Option 3</option>
+                onChange={(e) => handleSelect(e)}
+              >{tipos.map(tipo => {
+                return(
+                  <option value={tipo.id} onChange={()=>setTipo(tipo.id)}>{tipo.rotuloTipo}</option>
+                )
+              })}
               </Select>
 
             </FormControl>
@@ -92,12 +114,9 @@ export default function AdicionarProduto() {
               <FormLabel htmlFor="destaque">Destaque</FormLabel>
               <RadioGroup defaultValue='2'>
                 <Stack spacing={5} direction='row'>
-                  <Radio colorScheme='green' value='Sim'>
-                    Sim
-                  </Radio>
-                  <Radio colorScheme='red' value='Nao'>
-                    Não
-                  </Radio>
+                
+                 <Switch colorScheme="red" size="lg" value={destaque} onChange={handleSwitch}/>
+                 
                 </Stack>
               </RadioGroup>
             </FormControl>
@@ -106,18 +125,18 @@ export default function AdicionarProduto() {
               <Input
               name="descricao"
               placeholder="Insira aqui uma descrição para o novo produto"
-              {...formik.getFieldProps("produto")
-            }
-            type="text"
+              type="text"
+              value={descricao}
+              onChange={(e)=>setDescricao(e.target.value)}
               />
             </FormControl>
             <FormControl>
               <FormLabel htmlFor="resumo">Resumo</FormLabel>
-
               <Textarea
               name="resumo"
               placeholder="Insira aqui um resumo sobre o produto"
-              {...formik.getFieldProps("resumo")}
+              value={resumo}
+              onChange={(e)=>setResumo(e.target.value)}
               >
               </Textarea>
             </FormControl>
@@ -126,7 +145,7 @@ export default function AdicionarProduto() {
               <NumberInput
                value={format(value)}
              onChange={(valueString) => setValue(parse(valueString))}
-               
+            
                >
           <NumberInputField />
         <NumberInputStepper>
@@ -135,7 +154,7 @@ export default function AdicionarProduto() {
         </NumberInputStepper>
           </NumberInput>
             </FormControl>
-            <Button type="submit" colorScheme="orange" width="full">
+            <Button type="submit" colorScheme="orange" width="full" onClick={handleSubmit}>
               Inserir novo produto
             </Button>
           </VStack>
