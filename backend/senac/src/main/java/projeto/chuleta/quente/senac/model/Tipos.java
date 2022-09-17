@@ -13,9 +13,13 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "tbtipos")
 public class Tipos {
@@ -32,6 +36,11 @@ public class Tipos {
 	
 	@OneToMany (mappedBy = "tipoProduto")
 	private List<Produto> listaProdutos = new ArrayList<Produto>();
+
+
+	public Tipos(Long id){
+		this.id = id;
+	}
 
 
 }

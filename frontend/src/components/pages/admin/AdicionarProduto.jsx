@@ -29,6 +29,7 @@ import DrawerMenu from '../../reutilizable/DrawerMenu';
 import { useEffect } from 'react';
 import TiposService from '../../../services/TiposService';
 import UploadService from '../../../services/uploadService';
+import ProdutoService from '../../../services/ProdutoService';
 
 export default function AdicionarProduto() {
 
@@ -42,7 +43,7 @@ export default function AdicionarProduto() {
   const [descricao, setDescricao] = useState(['']);
   const [resumo, setResumo] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
-
+  const [idProduto, setIdProduto] = useState(0);
 
 
   useEffect(()=>{
@@ -58,16 +59,34 @@ export default function AdicionarProduto() {
       e.preventDefault();
       console.log(value);
       console.log(tipo);
-      console.log(destaque);
+      console.log(destaque? 'Sim' : 'Não');
       console.log(descricao);
       console.log(resumo);
 
+      let data = {
+        "descriProduto": descricao,
+        "resumoProduto": resumo,
+        "valorProduto": value,
+        "destaqueProduto": destaque? 'SIM' : 'NAO',
+        "tipoProduto": tipo
+      }
+
+      console.log(data);
+
+
+    ProdutoService.addProduto(data).then(response => uploadFile(response.data.id));
+
+      //PRIMEIRO VAMOS FAZER UMA REQUISIÇÃO PARA O PRODUTO
+
+      
+    }
+
+    const uploadFile = (idProduto) => {
       let file = new FormData();
       file.append('file', selectedFile);
       //requisição para api para upload de imagem
-      // UploadService.uploadImage(file);
-      console.log(selectedFile);
-
+      UploadService.uploadImage(file, idProduto).then(response => console.log(response.data));
+    
     }
 
     const handleSwitch = () => {

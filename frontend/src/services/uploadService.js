@@ -1,10 +1,10 @@
 import axios from 'axios';
 import AuthHeader  from './auth-header.js'
 
-const URL_API = "http://localhost:8080/api/upload";
+const URL_API = "http://localhost:8080/api/files";
 
-const uploadImage = (image) => {
-    return axios.post(URL_API, image, {headers : AuthHeader()});
+const uploadImage = (image, idProduto) => {
+    return axios.post(URL_API + "/upload/" + idProduto, image, {headers : AuthHeader()});
 }
 
 

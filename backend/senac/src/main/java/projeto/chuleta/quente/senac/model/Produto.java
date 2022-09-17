@@ -25,6 +25,7 @@ import projeto.chuleta.quente.senac.enums.DestaqueProduto;
 public class Produto {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "id_produto")
+	@Getter
 	private Long id;
 
 	
@@ -52,5 +53,5 @@ public class Produto {
 	@Getter @Setter
 	@JoinColumn(name="id_imagem_produto")
 	private FileDB imagemProduto;
-	
+
 }

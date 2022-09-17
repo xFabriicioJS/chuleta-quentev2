@@ -26,9 +26,9 @@ import projeto.chuleta.quente.senac.Exceptions.ResourceNotFoundException;
 import projeto.chuleta.quente.senac.model.Produto;
 import projeto.chuleta.quente.senac.repositories.ProdutosRepository;
 
-@CrossOrigin( origins = "localhost:3000")
+@CrossOrigin( origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/api/topicos")
+@RequestMapping("/api/produtos")
 public class ProdutosController {
 
 
