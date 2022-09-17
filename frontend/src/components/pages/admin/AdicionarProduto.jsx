@@ -28,6 +28,7 @@ import { AiFillLeftCircle } from "react-icons/ai";
 import DrawerMenu from '../../reutilizable/DrawerMenu';
 import { useEffect } from 'react';
 import TiposService from '../../../services/TiposService';
+import UploadService from '../../../services/uploadService';
 
 export default function AdicionarProduto() {
 
@@ -40,6 +41,8 @@ export default function AdicionarProduto() {
   const [destaque, setDestaque] = useState(false);
   const [descricao, setDescricao] = useState(['']);
   const [resumo, setResumo] = useState('');
+  const [selectedFile, setSelectedFile] = useState(null);
+
 
 
   useEffect(()=>{
@@ -47,6 +50,9 @@ export default function AdicionarProduto() {
 
     },[])
 
+    const handleImage = (e) => {
+      setSelectedFile(e.target.files[0]);
+    }
 
     const handleSubmit = (e) => {
       e.preventDefault();
@@ -55,6 +61,12 @@ export default function AdicionarProduto() {
       console.log(destaque);
       console.log(descricao);
       console.log(resumo);
+
+      let file = new FormData();
+      file.append('file', selectedFile);
+      //requisição para api para upload de imagem
+      // UploadService.uploadImage(file);
+      console.log(selectedFile);
 
     }
 
@@ -153,6 +165,13 @@ export default function AdicionarProduto() {
           <NumberDecrementStepper />
         </NumberInputStepper>
           </NumberInput>
+            </FormControl>
+            <FormControl>
+              <Input
+              type="file"
+              onChange={handleImage}
+              accept="image/*"
+              />
             </FormControl>
             <Button type="submit" colorScheme="orange" width="full" onClick={handleSubmit}>
               Inserir novo produto

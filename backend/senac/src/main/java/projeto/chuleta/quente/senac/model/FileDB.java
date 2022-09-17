@@ -31,14 +31,17 @@ public class FileDB {
 
     public FileDB() {
     }
-
-
-
-    public FileDB(String name, String type, byte[] data) {
+    
+    public FileDB(String name, String type, byte[] data, Produto produto) {
         this.name = name;
         this.type = type;
         this.data = data;
+        this.produto = produto;
     }
+
+
+
+
 
 
 
@@ -88,8 +91,41 @@ public class FileDB {
         this.data = data;
     }
 
+    //Builder para o FileDB
+
+    public static class FileBuilder{
+        private String filename;
+        private byte[] data;
+        private String type;
+        private Produto produto;
+
+        public FileBuilder(byte[] data) {
+            this.data = data;
+        }
+
+        public static FileBuilder newBuilder(byte[] data){
+            return new FileBuilder(data);
+        }
+
+        public FileBuilder withFileName(String fileName){
+            this.filename = fileName;
+            return this;
+        }
+
+        public FileBuilder withType(String type){
+            this.type = type;
+            return this;
+        }
+
+        public FileBuilder withProduto(Produto produto){
+            this.produto = produto;
+            return this;
+        }
+
+        public FileDB build(){
+            return new FileDB(filename, type, data, produto);
+        }
+    }
     
 
-    
-    
 }
