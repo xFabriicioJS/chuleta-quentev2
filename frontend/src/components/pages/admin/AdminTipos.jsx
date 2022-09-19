@@ -67,13 +67,13 @@ function AdminTipos() {
         width="80%"
         m="0 auto"
         bgColor="orange.100"
-        p="2"
+        p="4"
         rounded="md"
         my="4"
         fontSize="30"
         >
             Todos os tipos
-            <FiShoppingCart fontSize="50px"/>
+            <FiShoppingCart fontSize="40px"/>
         </Heading>
         <TableContainer
             width="80%"

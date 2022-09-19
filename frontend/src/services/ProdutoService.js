@@ -11,11 +11,16 @@ const addProduto = (produto) => {
     return axios.post(URL_API, produto, {headers : AuthHeader()});
 }
 
+const listarProdutos = () => {
+    return axios.get(URL_API, {headers : AuthHeader()});
+}
+
 
 
 
 const ProdutoService = {
-addProduto
+addProduto,
+listarProdutos
 }
 
 
