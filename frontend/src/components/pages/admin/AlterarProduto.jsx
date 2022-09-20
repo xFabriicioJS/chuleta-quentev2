@@ -21,30 +21,98 @@ import {
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
-  Drawer
+  Drawer,
+  Switch
 } from "@chakra-ui/react";
 import { AiFillLeftCircle } from "react-icons/ai";
 import DrawerMenu from '../../reutilizable/DrawerMenu';
+import { useEffect } from 'react';
+import TiposService from '../../../services/TiposService';
+import UploadService from '../../../services/uploadService';
+import ProdutoService from '../../../services/ProdutoService';
+import { useLocation, useSearchParams } from "react-router-dom";
 
-export default function AlterarProduto() {
-
-
-
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-      rememberMe: false
-    },
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-    }
-  });
+export default function AdicionarProduto() {
+  const [searchParams] = useSearchParams();
   const format = (val) => `$` + val
   const parse = (val) => val.replace(/^\$/, '')
 
-  const [value, setValue] = useState('1.53')
+  const [value, setValue] = useState('1.99')
+  const [tipos, setTipos] = useState([]);
+  const [tipo, setTipo] = useState('');
+  const [destaque, setDestaque] = useState(false);
+  const [descricao, setDescricao] = useState(['']);
+  const [resumo, setResumo] = useState('');
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [idProduto, setIdProduto] = useState(0);
+  let location = useLocation();
 
+
+
+  useEffect(()=>{
+
+
+    //Buscando informações do atual produto
+    setIdProduto(location.state.id);
+
+    //Listando tipos
+    
+
+    },[])
+
+    const actualProduct = async() => {
+      return await ProdutoService.buscarProduto(idProduto);
+    }
+
+    const buscandoTipos = async () => {
+      const response = await TiposService.listarTipos();
+      setTipos(response.data);
+    }
+
+    const handleImage = (e) => {
+      setSelectedFile(e.target.files[0]);
+    }
+
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      console.log(value);
+      console.log(tipo);
+      console.log(destaque? 'Sim' : 'Não');
+      console.log(descricao);
+      console.log(resumo);
+
+      let data = {
+        "descriProduto": descricao,
+        "resumoProduto": resumo,
+        "valorProduto": value,
+        "destaqueProduto": destaque? 'SIM' : 'NAO',
+        "tipoProduto": tipo
+      }
+
+      console.log(data);
+
+
+    ProdutoService.addProduto(data).then(response => uploadFile(response.data.id));
+
+
+      
+    }
+
+    const uploadFile = (idProduto) => {
+      let file = new FormData();
+      file.append('file', selectedFile);
+      //requisição para api para upload de imagem
+      UploadService.uploadImage(file, idProduto).then(response => console.log(response.data));
+    
+    }
+
+    const handleSwitch = () => {
+      setDestaque(!destaque);
+    }
+
+    const handleSelect = (e) => {
+      setTipo(e.target.value);
+    }
   return (
     <Box
     h="100vh"
@@ -53,7 +121,7 @@ export default function AlterarProduto() {
     
    <DrawerMenu/>
    
-    <Flex bg="gray.100" align="center" justify="center" h="80vh">
+    <Flex bg="gray.100" align="center" justify="center">
       
       <Box bg="white" p={4} rounded="md" w="50vw">
         <Box
@@ -69,35 +137,34 @@ export default function AlterarProduto() {
           <Heading
           ml="4"
           >
-            Atualizando produto blabalba concatena aqui
+            Inserindo produtos
           </Heading>
         </Box>
-        <form onSubmit={formik.handleSubmit}>
+        <form>
           <VStack spacing={4} align="flex-start">
             <FormControl>
-              <FormLabel htmlFor="tipo">Novo Tipo</FormLabel>
+              <FormLabel htmlFor="tipo">Tipo</FormLabel>
               <Select
                 variant="filled"
                 
                 borderColor='orange'
                 placeholder='Tipo'
-              >
-                 <option value='option1'>Option 1</option>
-                <option value='option2'>Option 2</option>
-                <option value='option3'>Option 3</option>
+                onChange={(e) => handleSelect(e)}
+              >{tipos.map(tipo => {
+                return(
+                  <option value={tipo.id} onChange={()=>setTipo(tipo.id)}>{tipo.rotuloTipo}</option>
+                )
+              })}
               </Select>
 
             </FormControl>
             <FormControl>
-              <FormLabel htmlFor="destaque">Destaque?</FormLabel>
+              <FormLabel htmlFor="destaque">Destaque</FormLabel>
               <RadioGroup defaultValue='2'>
                 <Stack spacing={5} direction='row'>
-                  <Radio colorScheme='green' value='Sim'>
-                    Sim
-                  </Radio>
-                  <Radio colorScheme='red' value='Nao'>
-                    Não
-                  </Radio>
+                
+                 <Switch colorScheme="red" size="lg" value={destaque} onChange={handleSwitch}/>
+                 
                 </Stack>
               </RadioGroup>
             </FormControl>
@@ -106,18 +173,18 @@ export default function AlterarProduto() {
               <Input
               name="descricao"
               placeholder="Insira aqui uma descrição para o novo produto"
-              {...formik.getFieldProps("produto")
-            }
-            type="text"
+              type="text"
+              value={descricao}
+              onChange={(e)=>setDescricao(e.target.value)}
               />
             </FormControl>
             <FormControl>
               <FormLabel htmlFor="resumo">Resumo</FormLabel>
-
               <Textarea
               name="resumo"
               placeholder="Insira aqui um resumo sobre o produto"
-              {...formik.getFieldProps("resumo")}
+              value={resumo}
+              onChange={(e)=>setResumo(e.target.value)}
               >
               </Textarea>
             </FormControl>
@@ -126,7 +193,7 @@ export default function AlterarProduto() {
               <NumberInput
                value={format(value)}
              onChange={(valueString) => setValue(parse(valueString))}
-               
+            
                >
           <NumberInputField />
         <NumberInputStepper>
@@ -135,8 +202,15 @@ export default function AlterarProduto() {
         </NumberInputStepper>
           </NumberInput>
             </FormControl>
-            <Button type="submit" colorScheme="orange" width="full">
-              Atualizar produto
+            <FormControl>
+              <Input
+              type="file"
+              onChange={handleImage}
+              accept="image/*"
+              />
+            </FormControl>
+            <Button type="submit" colorScheme="orange" width="full" onClick={handleSubmit}>
+              Inserir novo produto
             </Button>
           </VStack>
         </form>

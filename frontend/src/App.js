@@ -31,7 +31,7 @@ function App() {
                   
           <Route path="/" element={<Homepage/>} />
           <Route path="/admin/adicionar-produto" element={<AdicionarProduto/>} />  
-          <Route path="/admin/produtos/alterar" element={<AlterarProduto/>} />  
+          <Route path="/admin/atualizar-produto/:id" element={<AlterarProduto/>} />  
           <Route path="/login/admin" element={<LoginAdmin/>} />
           <Route path="/login/cliente" element={<LoginCliente/>} />
           <Route path="/admin" element={<Admin/>} />
@@ -45,6 +45,7 @@ function App() {
           <Route path="/cliente/reservas" element={<ClienteReservas/>} />
           <Route path="/cliente/reservas/:id" element={<VisualizarReserva/>} />
           <Route path="/admin/atualizar-tipo/:id" element={<AlterarTipo/>} />
+
           {/*          <Route path="/destaques" element={<Destaques/>} />
           <Route path="/buscaProduto" element={<BuscaProduto/>} />
           <Route path="/admin" element={<Admin/>} />

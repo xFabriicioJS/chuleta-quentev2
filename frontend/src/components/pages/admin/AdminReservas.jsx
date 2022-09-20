@@ -23,12 +23,21 @@ import {TbAdjustmentsHorizontal} from 'react-icons/tb'
 import Header from '../../reutilizable/Header'
 import { AiFillDelete } from 'react-icons/ai'
 import DrawerMenu from '../../reutilizable/DrawerMenu';
+import background from '../../../images/produtos.jpg'
 
 function AdminReservas() {
 
 
   return (
-    <>
+    <Box
+    bgImage={background}
+    backgroundRepeat="no-repeat"
+    backgroundPosition="center"
+    background="cover"
+    align="center"
+    justify="center"
+    minH="100vh">
+    
         <DrawerMenu/>
         <Heading        
         display="flex"
@@ -50,10 +59,11 @@ function AdminReservas() {
             rounded="2xl"
             boxShadow="Dark lg"
             m="0 auto"
+         
         >
             <Table variant="striped" colorScheme="orange" size="md">
-                <TableCaption>Lista de reservas</TableCaption>
-                    <Thead>
+                <TableCaption bgColor={'whiteAlpha.800'}>Lista de reservas</TableCaption>
+                    <Thead bgColor={'whiteAlpha.800'}>
                         <Tr>
                             <Th>
                                 Número da reserva
@@ -98,7 +108,7 @@ function AdminReservas() {
                     </Tbody>
             </Table>
         </TableContainer>
-    </>
+    </Box>
   )
 }
 

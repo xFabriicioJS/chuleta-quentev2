@@ -15,12 +15,22 @@ const listarProdutos = () => {
     return axios.get(URL_API, {headers : AuthHeader()});
 }
 
+//Remove o produto do banco de dados! E não apenas o desativa
+const removerProduto = (id) => {
+    return axios.delete(URL_API + "/" + id, {headers : AuthHeader()});
+}
+
+const buscarProduto = (id) => {
+    return axios.get(URL_API + "/" + id, {headers : AuthHeader()});
+}
+
 
 
 
 const ProdutoService = {
 addProduto,
-listarProdutos
+listarProdutos,
+removerProduto
 }
 
 

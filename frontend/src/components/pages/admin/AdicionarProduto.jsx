@@ -76,7 +76,6 @@ export default function AdicionarProduto() {
 
     ProdutoService.addProduto(data).then(response => uploadFile(response.data.id));
 
-      //PRIMEIRO VAMOS FAZER UMA REQUISIÇÃO PARA O PRODUTO
 
       
     }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {
     Box,
     Table,
@@ -15,12 +15,19 @@ import {
     Image,
     Flex,
     ButtonGroup,
+    useToast,
+    useDisclosure,
+    AlertDialogOverlay,
+    AlertDialogContent,
+    AlertDialogHeader,
+    AlertDialogBody,
+    AlertDialogFooter,
+    AlertDialog,
   } from '@chakra-ui/react'
 
 import {IoIosAddCircle} from 'react-icons/io'  
 import { FiShoppingCart } from 'react-icons/fi'
 import {TbAdjustmentsHorizontal} from 'react-icons/tb'
-import Header from '../../reutilizable/Header'
 import { AiFillDelete } from 'react-icons/ai'
 import DrawerMenu from '../../reutilizable/DrawerMenu';
 import ProdutoService from '../../../services/ProdutoService'
@@ -30,12 +37,24 @@ import background from '../../../images/produtos.jpg'
 function AdminProdutos() {
 
     const [produtos, setProdutos] = useState(['']);
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const cancelRef = useRef();
     let navigate = useNavigate();
 
     useEffect(() => {
         ProdutoService.listarProdutos().then((response)=>setProdutos(response.data.content));
         console.log(produtos);
     }, [])
+
+
+    const deletarProduto = async (idProd) => {
+        await ProdutoService.removerProduto(idProd);
+        setProdutos(produtos.filter(produto => produto.id !== idProd));
+    }
+
+    const handleAtualizar = (id) => {
+        navigate(`/admin/atualizar-produto/${id}`, {state : {id}})
+    }
 
 
     
@@ -57,7 +76,7 @@ function AdminProdutos() {
         display="flex"
         width="80%"
         m="0 auto"
-        bgColor="orange.100"
+        bgColor="red.100"
         p="4"
         rounded="md"
         my="4"
@@ -73,7 +92,7 @@ function AdminProdutos() {
             boxShadow="Dark lg"
             m="0 auto"
         >
-            <Table variant="striped" colorScheme="orange">
+            <Table variant="striped" colorScheme="red">
                 <TableCaption bgColor={'whiteAlpha.800'}>Lista de produtos</TableCaption>
                     <Thead bgColor={'whiteAlpha.800'}>
                         <Tr>
@@ -89,7 +108,7 @@ function AdminProdutos() {
                             <Th>
                                 Valor
                             </Th>
-                            <Th>
+                            <Th textAlign="center">
                                 Imagem
                             </Th>
                             <Th display="flex" justifyContent="center">
@@ -107,7 +126,7 @@ function AdminProdutos() {
                             <Td><b>{produto.descriProduto}</b></Td>
                             <Td><b>{produto.resumoProduto}</b></Td>
                             <Td><b>R$ {produto.valorProduto}</b></Td>
-                            <Td>
+                            <Td display="flex" justifyContent="center">
                             <Flex w={180} h={170} rounded='2xl' bgColor='whiteAlpha.400' justifyContent='center' alignItems="center">
                             <Image
                               src={`data:${produto.imagemProduto?.type};base64,${produto.imagemProduto?.data}`}
@@ -120,8 +139,38 @@ function AdminProdutos() {
                             </Td>                            
                             <Td>
                                 <ButtonGroup display="flex" alignItems={'center'} justifyContent="center">
-                                    <Button>Alterar</Button>
-                                    <Button>Excluir</Button>
+                                <Button leftIcon={<TbAdjustmentsHorizontal/>} colorScheme="teal" onClick={()=>handleAtualizar(produto.id)}>Alterar</Button>
+                                <Button onClick={onOpen} leftIcon={<AiFillDelete/>} colorScheme="red">Excluir</Button>
+                                        <AlertDialog
+                      isOpen={isOpen}
+                      leastDestructiveRef={cancelRef}
+                      onClose={onClose}
+                      motionPreset="slideInBottom"
+                    >
+                      <AlertDialogOverlay></AlertDialogOverlay>
+                      <AlertDialogContent>
+                        <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                          Deletar produto
+                        </AlertDialogHeader>
+
+                        <AlertDialogBody>
+                          Você tem certeza? Essa alteração não poderá ser desfeita.
+                        </AlertDialogBody>
+
+                        <AlertDialogFooter>
+                          <Button ref={cancelRef} onClick={onClose}>
+                            Cancelar
+                          </Button>
+                          <Button
+                            colorScheme="red"
+                            onClick={()=>deletarProduto(produto.id)}
+                            ml={3}
+                          >
+                            Sim, deletar
+                          </Button>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
                                 </ButtonGroup>
                             </Td>                            
                          
