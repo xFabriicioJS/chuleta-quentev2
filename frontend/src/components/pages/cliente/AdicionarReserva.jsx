@@ -77,15 +77,6 @@ export default function AdicionarProduto() {
     console.log(nDePessoasReserva);
     console.log(motivoReserva);
 
-    // {
-    //   "idClienteReserva": {
-    //     "idUsuario": "1" 
-    //   },
-    //   "motivoReserva": "Teste aniversário",
-    //   "dataReservada": "12/09/2022 17:00",
-    //   "nomeClienteReserva": "Fabricio",
-    //   "ndePessoasReserva": "8"
-    // }
 
 
     const usuario = JSON.parse(localStorage.getItem('usuario'));

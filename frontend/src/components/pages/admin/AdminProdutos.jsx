@@ -56,10 +56,6 @@ function AdminProdutos() {
         navigate(`/admin/atualizar-produto/${id}`, {state : {id}})
     }
 
-
-    
-
-
   return (
     <Box
     bgImage={background}

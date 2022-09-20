@@ -24,13 +24,19 @@ const buscarProduto = (id) => {
     return axios.get(URL_API + "/" + id, {headers : AuthHeader()});
 }
 
+const atualizarProduto = (produto, id) => {
+    return axios.put(URL_API + "/" + id, produto, {headers : AuthHeader()});
+} 
+
 
 
 
 const ProdutoService = {
 addProduto,
 listarProdutos,
-removerProduto
+removerProduto,
+buscarProduto,
+atualizarProduto
 }
 
 

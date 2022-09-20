@@ -38,10 +38,10 @@ public class Produto {
 	@Getter @Setter @Column(name = "valor_produto")
 	private BigDecimal valorProduto;
 	
-	//@Getter @Setter
-	//private String imagemProduto;
+
 	
 	@Enumerated(EnumType.STRING) @NotNull @Column(name = "destaque_produto")
+	@Getter @Setter
 	private DestaqueProduto destaqueProduto = DestaqueProduto.NAO;
 	
 	@ManyToOne

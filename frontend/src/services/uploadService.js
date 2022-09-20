@@ -7,11 +7,16 @@ const uploadImage = (image, idProduto) => {
     return axios.post(URL_API + "/upload/" + idProduto, image, {headers : AuthHeader()});
 }
 
+const updateImage = (image, idProduto) => {
+    return axios.put(URL_API + "/upload/" + idProduto, image, {headers : AuthHeader()});
+}
+
 
 
 
 const UploadService = {
-uploadImage
+uploadImage,
+updateImage
 }
 
 export default UploadService;

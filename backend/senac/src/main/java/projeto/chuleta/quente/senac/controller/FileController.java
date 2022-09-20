@@ -8,6 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,4 +35,13 @@ public class FileController {
 
     }
 
-}
+    @PutMapping("upload/{idProduto}")
+        public ResponseEntity<String> updateFile(@RequestParam("file") MultipartFile file, @PathVariable(name = "idProduto", required = true) Long idProduto){
+            FileDB arquivo = fileService.save(file, idProduto);
+
+            return ResponseEntity.ok(ServletUriComponentsBuilder.fromCurrentContextPath().path("/downloadFile/").path(arquivo.getId().toString()).toString());
+        }
+
+    }
+
+
