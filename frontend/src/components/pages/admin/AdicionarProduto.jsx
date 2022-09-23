@@ -27,11 +27,13 @@ import TiposService from "../../../services/TiposService";
 import UploadService from "../../../services/uploadService";
 import ProdutoService from "../../../services/ProdutoService";
 import { useNavigate } from "react-router-dom";
+import AuthService from "../../../services/AuthService";
 
 export default function AdicionarProduto() {
   const format = (val) => `$` + val;
   const parse = (val) => val.replace(/^\$/, "");
 
+  const [currentUser, setCurrentUser] = useState(undefined);
   const [value, setValue] = useState("1.99");
   const [tipos, setTipos] = useState([]);
   const [tipo, setTipo] = useState("");
@@ -43,6 +45,11 @@ export default function AdicionarProduto() {
   const toast = useToast();
 
   useEffect(() => {
+     const user = AuthService.getCurrentUser();
+       if (user) {
+         setCurrentUser(user);
+
+       }
     TiposService.listarTipos().then((response) => setTipos(response.data));
   }, []);
 
@@ -61,7 +68,6 @@ export default function AdicionarProduto() {
       tipoProduto: tipo,
     };
 
-    console.log(data);
 
     ProdutoService.addProduto(data).then((response) =>
       uploadFile(response.data.id)
@@ -90,6 +96,11 @@ export default function AdicionarProduto() {
   const handleSelect = (e) => {
     setTipo(e.target.value);
   };
+  
+  if (!currentUser || currentUser.roles[0] == "ROLE_USER") {
+    return navigate("/login/admin");
+  }
+
   return (
     <Box h="100vh" bg="gray.100">
       <DrawerMenu />

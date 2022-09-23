@@ -29,12 +29,16 @@ const addReserva = (reserva) => {
     return axios.post(URL_API, reserva, {headers : AuthHeader()});
 }
 
+const updateReserva = (id, reserva) => {
+    return axios.put(`${URL_API}/${id}`, reserva, {headers : AuthHeader()});
+}
 
  const ReservasService = {
         findAllReservas,
         findAllReservasByUserId,
         getReservaById,
-        addReserva    
+        addReserva,
+        updateReserva 
 }
 
 export default ReservasService;

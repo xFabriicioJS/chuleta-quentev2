@@ -25,11 +25,11 @@ function Homepage() {
         <Box w="100%" textAlign="center">
           <Heading
             m="40px auto"
-            bgColor="whiteAlpha.500"
+            bgColor="whiteAlpha.700"
             p="2"
             rounded="2xl"
             w="80%"
-            textColor="whiteAlpha.900"
+            textColor="gray.900"
             boxShadow="2xl"
           >
             Destaques

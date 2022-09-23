@@ -1,16 +1,13 @@
-
 import { useState } from "react";
 
 import {
   Box,
   Button,
-  Checkbox,
   Flex,
   FormControl,
   FormLabel,
   Heading,
   Input,
-
   Select,
   Stack,
   VStack,
@@ -21,9 +18,7 @@ import {
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
-  Drawer,
   Switch,
-  Image,
   useToast,
 } from "@chakra-ui/react";
 import { AiFillLeftCircle } from "react-icons/ai";
@@ -33,9 +28,9 @@ import TiposService from "../../../services/TiposService";
 import UploadService from "../../../services/uploadService";
 import ProdutoService from "../../../services/ProdutoService";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import AuthService from "../../../services/AuthService";
 
 export default function AdicionarProduto() {
-
   const format = (val) => `$` + val;
   const parse = (val) => val.replace(/^\$/, "");
 
@@ -46,26 +41,33 @@ export default function AdicionarProduto() {
   const [descricao, setDescricao] = useState([""]);
   const [resumo, setResumo] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
+  const [currentUser, setCurrentUser] = useState(undefined);
   const toast = useToast();
   let navigate = useNavigate();
   let location = useLocation();
 
   useEffect(() => {
+    const user = AuthService.getCurrentUser();
+    if (user) {
+      setCurrentUser(user);
+    }
+    if (currentUser) {
+      actualProduct(location.state.id).then((res) => {
+        console.log(res.data);
+        //buscando todos os tipos
+        buscandoTipos();
+
+        setTipo(res.data.tipoProduto.id);
+        console.log(tipo);
+        setDestaque(res.data.destaqueProduto == "SIM" ? true : false);
+        setDescricao(res.data.descriProduto);
+        setResumo(res.data.resumoProduto);
+        setValue(res.data.valorProduto);
+        setSelectedFile(res.data.imagemProduto);
+      });
+    }
+
     //Buscando informações do atual produto
-
-    actualProduct(location.state.id).then((res) => {
-      console.log(res.data);
-      //buscando todos os tipos
-      buscandoTipos();
-
-      setTipo(res.data.tipoProduto.id);
-      console.log(tipo);
-      setDestaque(res.data.destaqueProduto == "SIM" ? true : false);
-      setDescricao(res.data.descriProduto);
-      setResumo(res.data.resumoProduto);
-      setValue(res.data.valorProduto);
-      setSelectedFile(res.data.imagemProduto);
-    });
   }, []);
 
   const handleImage = (e) => {
@@ -83,7 +85,6 @@ export default function AdicionarProduto() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
 
     let data = {
       descriProduto: descricao,
@@ -119,6 +120,10 @@ export default function AdicionarProduto() {
   const handleSelect = (e) => {
     setTipo(e.target.value);
   };
+
+  if (!currentUser || currentUser.roles[0] == "ROLE_USER") {
+    return navigate("/login/admin");
+  }
   return (
     <Box h="100vh" bg="gray.100">
       <DrawerMenu />

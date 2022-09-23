@@ -1,13 +1,12 @@
 // View responsável por listar TODAS as reservas de todos os clientes
 
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     Box,
     Table,
     Thead,
     Tbody,
-    Tfoot,
     Tr,
     Th,
     Td,
@@ -20,12 +19,27 @@ import {
 import {IoIosAddCircle} from 'react-icons/io'  
 import { FiShoppingCart } from 'react-icons/fi'
 import {TbAdjustmentsHorizontal} from 'react-icons/tb'
-import Header from '../../reutilizable/Header'
-import { AiFillDelete } from 'react-icons/ai'
 import DrawerMenu from '../../reutilizable/DrawerMenu';
 import background from '../../../images/produtos.jpg'
 
+import ReservasService from '../../../services/ReservasService'
+import { useNavigate } from 'react-router-dom'
+
 function AdminReservas() {
+    const [reservas, setReservas] = useState(['']);
+    let navigate = useNavigate();
+
+    //fazendo requisição para api para listar todas as reservas
+    useEffect(() => {
+        ReservasService.findAllReservas().then(response => setReservas(response.data));
+        console.log(reservas);
+
+    }, [])
+
+
+    const handleAtualizar = (id) => {
+        navigate(`/admin/reservas/${id}`, {state : {id}})
+    }
 
 
   return (
@@ -86,25 +100,38 @@ function AdminReservas() {
                             <Th>
                                 Status da reserva
                             </Th>
-                            <Th display="flex" justifyContent="center">
-                                <Button colorScheme="orange" leftIcon={<IoIosAddCircle/>}>
-                                    Adicionar
-                                </Button>
+                            <Th>
+
                             </Th>
+                           
                         </Tr>
                     </Thead>
                     <Tbody>
-                        <Tr>
-                            <Td>Teste número</Td>
-                            <Td>Teste data</Td>
-                            <Td>Teste hora</Td>
-                            <Td>Teste dataAbertura</Td>
-                            <Td>Teste Nome</Td>                            
-                            <Td>Teste status</Td>                            
-                            <Td display="flex" justifyContent="center" gap="2">
-                                <Button leftIcon={<TbAdjustmentsHorizontal/>} colorScheme="teal">Alterar</Button>
-                            </Td>
-                        </Tr>
+                        {reservas.length > 0 ? reservas.map(reserva => {
+                            return(
+                                reservas.map(reserva => {
+                                    return(
+                                        <Tr key={reserva.id}>
+                                            <Td><b>{reserva.id}</b></Td>
+                                            <Td><b>{reserva.dataReservada}</b></Td>
+                                            <Td><b>{reserva.dataReservada}</b></Td>
+                                            <Td><b>{reserva.dataAbertura}</b></Td>
+                                            <Td><b>{reserva.idClienteReserva?.nome}</b></Td>
+                                            <Td>
+                                                <Button><b>
+                                                {reserva.statusReserva?.replace('_', ' ')}</b>
+                                                </Button>
+                                                </Td>
+                                                                                           
+                                            <Td>
+                                                
+                                                <Button leftIcon={<TbAdjustmentsHorizontal/>} colorScheme="teal" onClick={()=>handleAtualizar(reserva.id)}>Alterar</Button>
+                                            </Td>
+                                        </Tr>
+                                    )
+                                   })
+                            )
+                        }) : <Tr><Td colSpan="12"><b>Nenhuma reserva encontrada.</b></Td></Tr>}
                     </Tbody>
             </Table>
         </TableContainer>

@@ -19,15 +19,23 @@ import "./AdicionarTipo.css";
 import TiposService from '../../../services/TiposService';
 import AlertError from '../../reutilizable/AlertError';
 import background from '../../../images/backgroundLogin.jpg';
+import { useEffect } from 'react';
+import AuthService from '../../../services/AuthService';
 
 
 export default function AdicionarTipo() {
 
   const [message, setMessage] = useState(null);
-
   const toast = useToast();
-
   let navigate = useNavigate();
+  const [currentUser, setCurrentUser] = useState(undefined);
+
+  useEffect(()=>{
+    const user = AuthService.getCurrentUser();
+    if(user){
+      setCurrentUser(user);
+    }
+  },[])
 
   const formik = useFormik({
     initialValues: {
@@ -51,6 +59,10 @@ export default function AdicionarTipo() {
     }
   });
 
+
+  if (!currentUser || currentUser.roles[0] == "ROLE_USER") {
+    return navigate("/login/admin");
+  }
 
   return (
     <Box
