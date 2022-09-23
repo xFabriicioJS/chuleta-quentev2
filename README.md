@@ -14,3 +14,11 @@ Atualmente ele é feito com:
 - React Router v6
 
 O projeto possui suporte a autenticação JWT, e permite upload de arquivos com UUID gerado automaticamente no banco de dados MySQL.
+
+Funcionalidades:
+- Adição, Exclusão e Alteração dos produtos e tipos cadastrados;
+- Painel do admin para gerenciamento;
+- Sistema de reservas, onde um cliente, devidademente cadastrado, poderá solicitar um pedido de reserva de mesa na churrascaria;
+- O administrador poderá cancelar, negar ou aceitar esse pedido de reserva, especificando o motivo.
+- O cliente, ao concluir o seu pedido, terá um email enviado tanto ao adminstrador quanto ao cliente, detalhando os detalhes da reserva.
+
