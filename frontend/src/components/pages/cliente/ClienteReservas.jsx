@@ -37,9 +37,11 @@ function ClienteReservas() {
     useEffect(()=>{
         const usuario = JSON.parse(localStorage.getItem('usuario'));
 
-         console.log(usuario.idUsuario);
+        if(usuario){
          ReservasService.findAllReservasByUserId(usuario.idUsuario).then(response => setReservas(response.data));
-
+        }else{
+            navigate('/login/cliente');
+        }
     },[])
 
     const handleView = (id) => {

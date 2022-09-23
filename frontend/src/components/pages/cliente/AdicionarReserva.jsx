@@ -37,7 +37,6 @@ import { useNavigate } from "react-router-dom";
 export default function AdicionarProduto() {
   const [currentUser, setCurrentUser] = useState(undefined);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [overlay, setOverlay] = useState(<OverlayOne />);
   const [date, setDate] = useState(new Date());
   const [nDePessoasReserva, setNDePessoasReserva] = useState(0);
   const [motivoReserva, setMotivoReserva] = useState("");
@@ -48,6 +47,8 @@ export default function AdicionarProduto() {
     const user = AuthService.getCurrentUser();
     if (user) {
       setCurrentUser(user);
+    }else{
+      navigate('/login/cliente');
     }
   },[])
 
@@ -58,6 +59,7 @@ export default function AdicionarProduto() {
       backdropFilter="blur(10px) hue-rotate(90deg)"
     />
   );
+  const [overlay, setOverlay] = useState(<OverlayOne />);
 
   const OverlayTwo = () => (
     <ModalOverlay
@@ -98,9 +100,7 @@ export default function AdicionarProduto() {
     ReservasService.addReserva(reserva);
   };
 
-  if(!currentUser){
-    navigate("/login/cliente")
-  }    
+ 
   
 
   return (

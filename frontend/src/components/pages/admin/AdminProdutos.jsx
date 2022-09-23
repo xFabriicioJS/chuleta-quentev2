@@ -40,12 +40,12 @@ function AdminProdutos() {
   const cancelRef = useRef();
   let navigate = useNavigate();
 
-  useEffect(() => {
+  useEffect( () => {
     const user = AuthService.getCurrentUser();
     if (user) {
       setCurrentUser(user);
     }
-    ProdutoService.listarProdutos().then((response) =>
+     ProdutoService.listarProdutos().then((response) =>
       setProdutos(response.data.content)
     );
     console.log(currentUser?.roles[0]);
@@ -127,7 +127,7 @@ function AdminProdutos() {
                     <b>{produto.descriProduto}</b>
                   </Td>
                   <Td>
-                    <b>{produto.resumoProduto}</b>
+                    <b>{produto?.resumoProduto?.length > 15 ? produto?.resumoProduto?.substring(0, 15) + '...' : produto?.resumoProduto}</b>
                   </Td>
                   <Td>
                     <b>R$ {produto.valorProduto}</b>
@@ -142,7 +142,7 @@ function AdminProdutos() {
                       alignItems="center"
                     >
                       <Image
-                        src={`data:${produto.imagemProduto?.type};base64,${produto.imagemProduto?.data}`}
+                        src={`data:${produto?.imagemProduto?.type};base64,${produto?.imagemProduto?.data}`}
                         width={170}
                         height={150}
                         alt="Imagem do produto"

@@ -5,8 +5,21 @@ import Card from "../reutilizable/Card";
 import Header from "../reutilizable/Header";
 import Slides from "../reutilizable/Slides";
 import background from "../../images/background.jpg";
+import ProdutoService from "../../services/ProdutoService";
+import { useEffect } from "react";
+
 
 function Homepage() {
+  const [produtos, setProdutos] = React.useState([""]);	
+
+  useEffect(()=>{
+    //Requisição para pegar todos os produtos
+    ProdutoService.listarProdutos().then((response)=>{
+        setProdutos(response.data.content);
+  
+    });
+  },[])
+ 
   return (
     
     <Box
@@ -35,7 +48,9 @@ function Homepage() {
             Destaques
           </Heading>
         </Box>
-        <Card />
+        {produtos.map((produto)=> {
+          <Card produto={produto}/>
+        })}        
       </Box>
     </Box>
   );

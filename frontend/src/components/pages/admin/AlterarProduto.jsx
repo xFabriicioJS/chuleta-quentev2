@@ -27,7 +27,7 @@ import { useEffect } from "react";
 import TiposService from "../../../services/TiposService";
 import UploadService from "../../../services/uploadService";
 import ProdutoService from "../../../services/ProdutoService";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import AuthService from "../../../services/AuthService";
 
 export default function AdicionarProduto() {
@@ -47,13 +47,22 @@ export default function AdicionarProduto() {
   let location = useLocation();
 
   useEffect(() => {
-    const user = AuthService.getCurrentUser();
+    
+    //Buscando informações do atual produto
+    requestUserInformationAndStoreData();
+
+  
+  }, []);
+
+  async function requestUserInformationAndStoreData(){
+    const user = await AuthService.getCurrentUser();
     if (user) {
       setCurrentUser(user);
+      
     }
-    if (currentUser) {
+    if (user && user?.roles[0] === "ROLE_ADMIN") {
       actualProduct(location.state.id).then((res) => {
-        console.log(res.data);
+        
         //buscando todos os tipos
         buscandoTipos();
 
@@ -65,10 +74,11 @@ export default function AdicionarProduto() {
         setValue(res.data.valorProduto);
         setSelectedFile(res.data.imagemProduto);
       });
+    }else{
+      navigate("/login/admin");
     }
-
-    //Buscando informações do atual produto
-  }, []);
+    
+   }
 
   const handleImage = (e) => {
     setSelectedFile(e.target.files[0]);
@@ -121,9 +131,7 @@ export default function AdicionarProduto() {
     setTipo(e.target.value);
   };
 
-  if (!currentUser || currentUser.roles[0] == "ROLE_USER") {
-    return navigate("/login/admin");
-  }
+ 
   return (
     <Box h="100vh" bg="gray.100">
       <DrawerMenu />
@@ -131,7 +139,9 @@ export default function AdicionarProduto() {
       <Flex bg="gray.100" align="center" justify="center">
         <Box bg="white" p={4} rounded="md" w="50vw">
           <Box w="50w" rounded="3xl" bg="white" display="flex" mb="10">
+            <Link to="/admin/produtos">
             <AiFillLeftCircle fontSize={"50px"} />
+            </Link>
             <Heading ml="4">Atualizando produtos</Heading>
           </Box>
           <form>

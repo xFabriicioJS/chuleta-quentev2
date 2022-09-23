@@ -13,7 +13,7 @@ import { useEffect } from "react";
 import DrawerMenu from "../../reutilizable/DrawerMenu";
 import AuthService from "../../../services/AuthService";
 import ReservasService from "../../../services/ReservasService";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import background from "../../../images/background.jpg";
 
 const VisualizarReserva = () => {
@@ -21,6 +21,7 @@ const VisualizarReserva = () => {
   const [data, setData] = useState("");
   const [currentUser, setCurrentUser] = useState(undefined);
   let location = useLocation();
+  let navigate = useNavigate();
 
   const requestReserva = () => {
     ReservasService.getReservaById(location.state.id).then((response) => {
@@ -33,11 +34,13 @@ const VisualizarReserva = () => {
     const user = AuthService.getCurrentUser();
     if (user) {
       setCurrentUser(user);
+      setTimeout(() => {
+        requestReserva();
+      }, 800);
+    }else{
+      navigate("/login/cliente");
     }
-    //Simulando uma requisição mais demorada
-    setTimeout(() => {
-      requestReserva();
-    }, 800);
+ 
   }, []);
 
   if (currentUser) {

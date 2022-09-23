@@ -38,9 +38,15 @@ function AdminTipos() {
     const toast = useToast();
 
     useEffect(()=>{
-        //Lógica para buscar os tipos de produtos
+      const usuario = JSON.parse(localStorage.getItem('usuario'));
+      if(usuario && usuario.roles[0] == 'ROLE_ADMIN'){
         TiposService.listarTipos().then((response)=>setTipos(response.data));
         console.log(tipos);
+      }else{
+        navigate('/login/admin');
+      }
+
+        //Lógica para buscar os tipos de produtos
     },[])
 
     const editarTipo = (id) => {

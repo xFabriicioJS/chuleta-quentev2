@@ -45,13 +45,6 @@ function App() {
         <Route path="/cliente/reservas" element={<ClienteReservas />} />
         <Route path="/cliente/reservas/:id" element={<VisualizarReserva />} />
         <Route path="/admin/atualizar-tipo/:id" element={<AlterarTipo />} />
-
-        {/*          <Route path="/destaques" element={<Destaques/>} />
-          <Route path="/buscaProduto" element={<BuscaProduto/>} />
-          <Route path="/admin" element={<Admin/>} />
-          
-          <Route path="/admin/usuarios" element={<AdminUsuarios/>} />
-           */}
       </Routes>
     </Box>
   );

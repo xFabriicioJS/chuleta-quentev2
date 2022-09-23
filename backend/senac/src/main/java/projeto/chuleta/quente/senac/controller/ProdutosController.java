@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,40 +27,42 @@ import projeto.chuleta.quente.senac.Exceptions.ResourceNotFoundException;
 import projeto.chuleta.quente.senac.model.Produto;
 import projeto.chuleta.quente.senac.repositories.ProdutosRepository;
 
-@CrossOrigin( origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/produtos")
+@PreAuthorize("isAuthenticated()")
 public class ProdutosController {
 
-
-	//Injeção de dependências com o repositorio de produtos
+	// Injeção de dependências com o repositorio de produtos
 	@Autowired
 	ProdutosRepository produtosRepository;
-	
 
-	//Método get para retornar uma página. Caso o cliente não forneça nenhum parâmetro na requisição, ele irá retornar uma página padrão com dez elementos ordenados pela descrição do produto.
+	// Método get para retornar uma página. Caso o cliente não forneça nenhum
+	// parâmetro na requisição, ele irá retornar uma página padrão com dez elementos
+	// ordenados pela descrição do produto.
 	@GetMapping
-	public Page<Produto> listarTodos(@RequestParam(required = false) String nomeProduto, @PageableDefault(sort = "descriProduto", direction = Direction.ASC, page = 0, size = 10) Pageable paginacao ){
+	//Permitindo que qualquer um possa fazer um get em produtos
+	@PreAuthorize("permitAll()")
+	public Page<Produto> listarTodos(@RequestParam(required = false) String nomeProduto,
+			@PageableDefault(sort = "descriProduto", direction = Direction.ASC, page = 0, size = 10) Pageable paginacao) {
 
-		if(nomeProduto == null){
-			
-		Page<Produto> produtos = produtosRepository.findAll(paginacao);
-		
-		return produtos;
+		if (nomeProduto == null) {
+
+			Page<Produto> produtos = produtosRepository.findAll(paginacao);
+
+			return produtos;
 		}
 
 		Page<Produto> produtos = produtosRepository.findByDescriProduto(nomeProduto, paginacao);
 
 		return produtos;
 
-
 	}
 
-
-	//Método Post, para inserir um produto
+	// Método Post, para inserir um produto
 	@PostMapping
 	@Transactional
-	public ResponseEntity<Produto> adicionarProduto(@RequestBody @Valid Produto produto){
+	public ResponseEntity<Produto> adicionarProduto(@RequestBody @Valid Produto produto) {
 
 		produtosRepository.save(produto);
 
@@ -68,23 +71,23 @@ public class ProdutosController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Produto> getProdutoById(@PathVariable Long id){
+	@PreAuthorize("permitAll()")
+	public ResponseEntity<Produto> getProdutoById(@PathVariable Long id) {
 		Optional<Produto> optional = produtosRepository.findById(id);
-
-		if(optional.isPresent()){
+		if (optional.isPresent()) {
 			return ResponseEntity.ok(optional.get());
 		}
 		return ResponseEntity.notFound().build();
 	}
 
-
-	//Método Delete, o cliete deve fornceer um id no parâmetro da URL. Caso o cliente forneçã um id inválido, ira retornar 404.
+	// Método Delete, o cliete deve fornceer um id no parâmetro da URL. Caso o
+	// cliente forneçã um id inválido, ira retornar 404.
 	@DeleteMapping("/{id}")
 	@Transactional
-	public ResponseEntity<Void> deletarProduto(@PathVariable Long id){
-		Optional <Produto> optional = produtosRepository.findById(id);
+	public ResponseEntity<Void> deletarProduto(@PathVariable Long id) {
+		Optional<Produto> optional = produtosRepository.findById(id);
 
-		if(optional.isPresent()){
+		if (optional.isPresent()) {
 			produtosRepository.deleteById(id);
 			return ResponseEntity.ok().build();
 		}
@@ -93,8 +96,9 @@ public class ProdutosController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Produto> atualizarProduto(@PathVariable Long id,@RequestBody @Valid Produto detailsProduto){
-		Produto produtoAserAtualizado = produtosRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Produto não encontrado! produto = "+ id));
+	public ResponseEntity<Produto> atualizarProduto(@PathVariable Long id, @RequestBody @Valid Produto detailsProduto) {
+		Produto produtoAserAtualizado = produtosRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado! produto = " + id));
 
 		produtoAserAtualizado.setDescriProduto(detailsProduto.getDescriProduto());
 		produtoAserAtualizado.setTipoProduto(detailsProduto.getTipoProduto());
@@ -102,10 +106,8 @@ public class ProdutosController {
 		produtoAserAtualizado.setValorProduto(detailsProduto.getValorProduto());
 
 		Produto novoProduto = produtosRepository.save(produtoAserAtualizado);
-		
+
 		return ResponseEntity.ok(novoProduto);
 	}
-	
-
 
 }
