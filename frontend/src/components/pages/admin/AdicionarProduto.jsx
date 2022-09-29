@@ -72,12 +72,16 @@ export default function AdicionarProduto() {
     ProdutoService.addProduto(data).then((response) =>
       uploadFile(response.data.id)
     );
-    navigate("/admin/produtos");
-    toast({
-      title: "Produto atualizado com sucesso.",
-      status: "success",
-      isClosable: true,
-    });
+
+    setTimeout(()=>{
+      navigate("/admin/produtos");
+      toast({
+        title: "Produto atualizado com sucesso.",
+        status: "success",
+        isClosable: true,
+      });
+    }, 1000)
+    
   };
 
   const uploadFile = (idProduto) => {

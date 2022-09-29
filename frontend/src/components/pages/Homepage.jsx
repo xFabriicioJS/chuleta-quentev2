@@ -1,5 +1,5 @@
 
-import { Box, Heading } from "@chakra-ui/react";
+import { Box, Flex, Grid, Heading } from "@chakra-ui/react";
 import React from "react";
 import Card from "../reutilizable/Card";
 import Header from "../reutilizable/Header";
@@ -16,21 +16,22 @@ function Homepage() {
     //Requisição para pegar todos os produtos
     ProdutoService.listarProdutos().then((response)=>{
         setProdutos(response.data.content);
-  
+        console.log(produtos);
     });
   },[])
  
   return (
     
     <Box
-      backgroundImage={background}
-      backgroundRepeat="no-repeat"
-      backgroundPosition="center"
-      background="cover"
-      backdropFilter="blur(10px) hue-rotate(90deg)"
-      zIndex="unset"
-      width="100%"
-      height="1280px"
+      // backgroundImage={background}
+      // backgroundRepeat="no-repeat"
+      // backgroundPosition="center"
+      // background="cover"
+      // backdropFilter="blur(10px) hue-rotate(90deg)"
+      // zIndex="unset"
+      // width="100%"
+      // minH="300vh"
+      // height="100%"
     >
       <Header />
       <Box w="900px" h="480px" m="20px auto">
@@ -48,9 +49,13 @@ function Homepage() {
             Destaques
           </Heading>
         </Box>
-        {produtos.map((produto)=> {
-          <Card produto={produto}/>
-        })}        
+        <Grid templateColumns='repeat(3, 1fr)' gap={6}>
+          {produtos.map((produto)=> {
+            return(
+            <Card produto={produto}/>
+            )
+          })}
+       </Grid>
       </Box>
     </Box>
   );

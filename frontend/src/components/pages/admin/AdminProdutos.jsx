@@ -94,7 +94,7 @@ function AdminProdutos() {
         boxShadow="Dark lg"
         m="0 auto"
       >
-        <Table variant="striped" colorScheme="red">
+        <Table variant="simple" colorScheme="red">
           <TableCaption bgColor={"whiteAlpha.800"}>
             Lista de produtos
           </TableCaption>
@@ -119,7 +119,7 @@ function AdminProdutos() {
           <Tbody>
             {produtos.map((produto) => {
               return (
-                <Tr>
+                <Tr bgColor="white">
                   <Td>
                     <b>{produto.tipoProduto?.rotuloTipo}</b>
                   </Td>
