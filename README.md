@@ -22,3 +22,5 @@ Funcionalidades:
 - O administrador poderá cancelar, negar ou aceitar esse pedido de reserva, especificando o motivo.
 - O cliente, ao concluir o seu pedido, terá um email enviado tanto ao adminstrador quanto ao cliente, detalhando os detalhes da reserva.
 
+
+Breve deploy via Docker
