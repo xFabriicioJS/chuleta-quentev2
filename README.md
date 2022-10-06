@@ -1,4 +1,4 @@
-# sistemati-refeito
+# chuleta-quentev2
 
 
 Esse é um projeto remodelado com base em um sistema de uma churrascaria que nos foi apresentado em aula pelo Professor Well do Senac Itaquera, o projeto original foi feito nas linguagens PHP, Javascript, com as tecnologias Ajax e Bootstrap. 
