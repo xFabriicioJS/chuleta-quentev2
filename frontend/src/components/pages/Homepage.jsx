@@ -23,20 +23,21 @@ function Homepage() {
   return (
     
     <Box
-      // backgroundImage={background}
-      // backgroundRepeat="no-repeat"
-      // backgroundPosition="center"
-      // background="cover"
-      // backdropFilter="blur(10px) hue-rotate(90deg)"
-      // zIndex="unset"
-      // width="100%"
-      // minH="300vh"
-      // height="100%"
-    >
+      backgroundImage={background}
+      backgroundRepeat="no-repeat"
+      backgroundPosition="center"
+      background="cover"
+      backdropFilter="blur(10px) hue-rotate(90deg)"
+      zIndex="-1"
+      width={["100%", "100%", "100%", "100%"]}
+      height="fit-content"
+      minHeight="100vh"
+>
       <Header />
       <Box w="900px" h="480px" m="20px auto">
-        <Slides />
-        <Box w="100%" textAlign="center">
+        <Slides />            
+      </Box>
+      <Box w="100%" textAlign="center">
           <Heading
             m="40px auto"
             bgColor="whiteAlpha.700"
@@ -48,15 +49,14 @@ function Homepage() {
           >
             Destaques
           </Heading>
-        </Box>
-        <Grid templateColumns='repeat(3, 1fr)' gap={6}>
+          <Grid templateColumns='repeat(3, 1fr)' gap={6}>
           {produtos.map((produto)=> {
             return(
             <Card produto={produto}/>
             )
           })}
        </Grid>
-      </Box>
+        </Box>   
     </Box>
   );
 }

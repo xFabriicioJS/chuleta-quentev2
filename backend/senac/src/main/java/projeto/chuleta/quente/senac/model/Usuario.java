@@ -43,7 +43,7 @@ public class Usuario {
 	@NotBlank @Getter @Setter @Column(name = "nome_usuario") @Size(max = 55) @NotNull
 	private String nome;
 
-	@NotBlank @CPF(message = "O campo CPF deve conter apenas números e obedecer ao limite de caracteres") @Getter @Setter @Column(name = "cpf_usuario") @Size(max = 14) @NotNull
+	@NotBlank @Getter @Setter @Column(name = "cpf_usuario") @Size(max = 14) @NotNull
 	private String cpf;
 
 	@NotBlank @Getter @Setter @Column(name = "login_usuario") @NotNull

@@ -21,20 +21,25 @@ import background from "../../../images/produtos.jpg";
 
 import ReservasService from "../../../services/ReservasService";
 import { useNavigate } from "react-router-dom";
+import AuthService from "../../../services/AuthService";
 
 function AdminReservas() {
   const [reservas, setReservas] = useState([""]);
+  const [currentUser, setCurrentUser] = useState(null);
+  
   let navigate = useNavigate();
 
   //fazendo requisição para api para listar todas as reservas
   useEffect(() => {
-    let usuario = localStorage.getItem("usuario");
-    if (usuario && usuario.roles[0] == "ROLE_ADMIN") {
+    let user = AuthService.getCurrentUser();
+    setCurrentUser(user);
+
+    if (currentUser && currentUser.roles[0] == "ROLE_ADMIN") {
       ReservasService.findAllReservas().then((response) =>
         setReservas(response.data)
       );
     } else {
-      navigate("/login/admin");
+      console.log('teste');
     }
   }, []);
 

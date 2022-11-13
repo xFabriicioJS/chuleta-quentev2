@@ -82,6 +82,7 @@ public class AuthController {
         Usuario usuario = new Usuario(signupRequest.getNome(), signupRequest.getCpf(), signupRequest.getLoginUsuario(), encoder.encode(signupRequest.getSenhaUsuario()));
         
         Set<String> strRoles = signupRequest.getRole();
+        System.out.println("------> LOGANDO ROLE DO USUÁRIO <----" + strRoles);
         Set<Role> roles = new HashSet<>();
 
         if(strRoles == null){
@@ -90,11 +91,13 @@ public class AuthController {
 
             roles.add(userRole);
         }else{
+            System.out.println(strRoles);
             strRoles.forEach(role ->{
-                if(role == "admin"){
+                            
+                if(role.toString().equals("admin")){
                     Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
                     .orElseThrow(()-> new RuntimeException("Erro: esse nível não foi encontrado // Error: this role was not found"));
-
+                    System.out.println("teste");
                     roles.add(adminRole);
                 }
                 Role userRole = roleRepository.findByName(ERole.ROLE_USER)
@@ -104,9 +107,10 @@ public class AuthController {
             });
         }
         
+        
         usuario.setRoles(roles);
             usuariosRepository.save(usuario);
-            return ResponseEntity.ok(new MessageResponse("Usuário foi criado com sucesso!"));        
+            return ResponseEntity.ok(new MessageResponse("Usuário foi criado com sucesso! , Níveis do usuário criado: " + usuario.getRoles().stream().map(role -> role.getName().toString()).collect(Collectors.joining(", "))));        
     }
 
 }

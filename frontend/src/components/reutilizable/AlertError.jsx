@@ -5,7 +5,7 @@ export default function AlertError({ message }) {
     <Box>
       <Alert status="error" borderRadius={4}>
         <AlertIcon />
-        <AlertDescription>{message}</AlertDescription>
+        <AlertDescription color={'blackAlpha.700'}>{message}</AlertDescription>
       </Alert>
     </Box>
   );

@@ -21,10 +21,10 @@ import { useEffect } from "react";
 
 export default function App() {
 
-  
   useEffect(()=>{
     let user = JSON.parse(localStorage.getItem('usuario'));
     if(user?.roles[0] === 'ROLE_ADMIN'){
+      console.log('teste');
       navigate('/admin');
     }
   },[])
@@ -53,7 +53,7 @@ export default function App() {
             navigate("/admin");
           }else{
             setMessage("Você não tem acesso aos recursos de administrador.")
-            localStorage.removeItem("usuario");
+            // localStorage.removeItem("usuario");
           }
         },
         (error) =>{
@@ -76,7 +76,9 @@ export default function App() {
       rounded="3xl"
       boxShadow="3xl"
       >
-      <Heading>
+      <Heading
+      color="blackAlpha.700"
+      >
           Acesso para administradores
       </Heading>
       <Box
@@ -98,31 +100,40 @@ export default function App() {
           <VStack spacing={4} align="flex-start">
             <Heading
             textAlign="center"
+            color="blackAlpha.700"
             >
               Faça seu login
             </Heading>
             <FormControl>
-              <FormLabel htmlFor="email">Endereço de email</FormLabel>
+              <FormLabel htmlFor="email"
+              color="blackAlpha.700"
+              >Endereço de email</FormLabel>
               <Input
                 id="email"
                 name="email"
+                color="blackAlpha.700"
                 type="email"
-                variant="filled"
+                borderWidth={2}
+                borderColor="orange"
+                variant="outline"
                 onChange={formik.handleChange}
                 value={formik.values.email}
                 placeholder="admin@admin..."
               />
             </FormControl>
             <FormControl>
-              <FormLabel htmlFor="password">Senha</FormLabel>
+              <FormLabel color="blackAlpha.700" htmlFor="password">Senha</FormLabel>
               <Input
                 id="password"
                 name="password"
+                borderWidth={2}
+                borderColor="orange"
                 type="password"
                 variant="filled"
                 onChange={formik.handleChange}
                 value={formik.values.password}
                 placeholder="*******"
+                color="blackAlpha.700"
               />
             </FormControl>
             <Button type="submit" colorScheme="orange" width="full">
