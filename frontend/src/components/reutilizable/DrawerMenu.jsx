@@ -42,7 +42,7 @@ function DrawerMenu() {
     <DrawerContent>
       <DrawerCloseButton />
       <DrawerHeader>
-      <Heading my="6" color={'whiteAlpha.900'}>Seja muito bem-vindo</Heading>
+      <Heading my="6">Seja muito bem-vindo</Heading>
       </DrawerHeader>
 
       <DrawerBody>

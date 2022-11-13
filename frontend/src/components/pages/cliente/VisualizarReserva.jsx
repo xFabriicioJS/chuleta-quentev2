@@ -61,13 +61,14 @@ const VisualizarReserva = () => {
     } else {
       return (
         <Box
-          bgImage={background}
-          backgroundRepeat="no-repeat"
-          backgroundPosition="center"
-          background="cover"
-          align="center"
-          justify="center"
-          h="100vh"
+        backgroundImage={background}
+        backgroundRepeat="no-repeat"
+        backgroundPosition="center"
+        background="cover"
+        backdropFilter="blur(10px) hue-rotate(90deg)"
+        zIndex="-1"
+        width={["100%", "100%", "100%", "100%"]}
+        minHeight="100vh"
         >
           <DrawerMenu />
           <Flex align="center" justify="center" w="full">

@@ -37,13 +37,13 @@ function Homepage() {
       <Box w="900px" h="480px" m="20px auto">
         <Slides />            
       </Box>
-      <Box w="100%" textAlign="center">
+      <Box w="100%" textAlign="center" display={'flex'} flexDirection={'column'} alignItems={'center'} justifyContent={'center'}>
           <Heading
             m="40px auto"
             bgColor="whiteAlpha.700"
             p="2"
             rounded="2xl"
-            w="80%"
+            w="70%"
             textColor="gray.900"
             boxShadow="2xl"
           >

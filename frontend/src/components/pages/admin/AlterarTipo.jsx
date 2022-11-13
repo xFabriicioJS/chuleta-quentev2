@@ -7,6 +7,7 @@ import {
   FormLabel,
   Heading,
   Input,
+  Spinner,
   useToast,
   VStack,
 } from "@chakra-ui/react";
@@ -15,6 +16,7 @@ import DrawerMenu from "../../reutilizable/DrawerMenu";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import TiposService from "../../../services/TiposService";
 import { useEffect } from "react";
+import AuthService from "../../../services/AuthService";
 
 export default function AdicionarTipo() {
   const [loading, setLoading] = useState(true);
@@ -27,19 +29,23 @@ export default function AdicionarTipo() {
   let location = useLocation();
   let navigate = useNavigate();
 
+
+  const retrieveTipoData = () => {
+    TiposService.getTipoById(location.state.id).then((response) =>
+    setTipo(response.data)
+    );
+    setLoading(false);
+  }
+
   useEffect(() => {
-    let user = localStorage.getItem("usuario");
-    if(user && user.roles[0] == "ROLE_ADMIN"){
-      TiposService.getTipoById(location.state.id).then((response) =>
-      setTipo(response.data)
-      );
-      setLoading(false);
-    }else {
+    const user = AuthService.getCurrentUser();
+    if(user.roles[0] === "ROLE_ADMIN"){
+      retrieveTipoData();
+    }else{
       navigate("/login/admin");
     }
-    
-
   }, []);
+
 
   const atualizarTipo = (e) => {
     e.preventDefault();
@@ -55,6 +61,21 @@ export default function AdicionarTipo() {
     });
     navigate("/admin/tipos");
   };
+  if(loading){
+    return (
+      <Flex justifyContent="center" align="center" h="100vh">
+        <Box>
+          <Spinner
+            thickness="5px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="orange.500"
+            size="xl"
+          />
+        </Box>
+      </Flex>
+    );
+  }
   return (
     <Box h="100vh" bg="gray.100">
       <DrawerMenu />

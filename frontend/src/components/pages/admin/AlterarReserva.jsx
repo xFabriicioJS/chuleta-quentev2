@@ -106,13 +106,15 @@ const AlterarReserva = () => {
     } else {
       return (
         <Box
-          bgImage={background}
-          backgroundRepeat="no-repeat"
-          backgroundPosition="center"
-          background="cover"
-          align="center"
-          justify="center"
-          h="100vh"
+        backgroundImage={background}
+        backgroundRepeat="no-repeat"
+        backgroundPosition="center"
+        background="cover"
+        backdropFilter="blur(10px) hue-rotate(90deg)"
+        zIndex="-1"
+        width={["100%", "100%", "100%", "100%"]}
+        height="fit-content"
+        minHeight="100vh"
         >
           <DrawerMenu />
           <Flex align="center" justify="center" w="full">
@@ -181,7 +183,7 @@ const AlterarReserva = () => {
                     </Box>
                   </Box>
 
-                  <Box mt="2">
+                  <Box mt="2" textAlign={'center'}>
                     <Text color="gray.600" fontWeight="bold">
                       Status da reserva
                     </Text>
@@ -194,6 +196,14 @@ const AlterarReserva = () => {
                   </Box>
 
                   <br />
+                        <Box
+                          display="flex"
+                          flexDirection={'column'}
+                          align="center"
+                          justifyContent="center"
+                          mt="4"
+                          gap={4}
+                        >
                   <Button colorScheme="linkedin" onClick={onOpen}>
                     Alterar status dessa reserva
                   </Button>
@@ -244,12 +254,6 @@ const AlterarReserva = () => {
                     </ModalContent>
                   </Modal>
 
-                  <Box
-                    display="flex"
-                    align="center"
-                    justifyContent="center"
-                    mt="4"
-                  >
                     <Link to="/admin/reservas">
                       <Button colorScheme="green">
                         Voltar para as minhas reservas

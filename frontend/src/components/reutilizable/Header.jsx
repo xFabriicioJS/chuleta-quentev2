@@ -38,7 +38,7 @@ function Header() {
               <FiShoppingCart color='black' fontSize={'25px'} className="icon"/>
               <BsFillBookmarkStarFill color='black' fontSize={'25px'} className="icon"/>
               
-              <Link to={"/login/admin"}>
+              <Link to={"/admin"}>
                 <Box w="20" display="flex" bgColor="black" h="8" p="1" rounded="xl" _hover={{background: "red"}} transition="1.0s">
                 <Text textColor="white">
                   Admin

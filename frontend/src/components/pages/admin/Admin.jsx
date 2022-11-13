@@ -99,9 +99,10 @@ function Admin() {
           rounded="2xl"
         >
           <Text fontSize="2xl">Reservas</Text>
-          <ButtonGroup mt="2">
-            <Button colorScheme="teal">Listar</Button>
-            <Button colorScheme="green">Inserir</Button>
+          <ButtonGroup mt="2" textAlign={'center'}>
+            <Button colorScheme="teal"
+            onClick={() => navigate("/admin/reservas")}>
+            Listar</Button>
           </ButtonGroup>
         </Box>
       </Flex>
