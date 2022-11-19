@@ -32,6 +32,7 @@ function Homepage() {
       width={["100%", "100%", "100%", "100%"]}
       height="fit-content"
       minHeight="100vh"
+      backgroundAttachment={"fixed"}
 >
       <Header />
       <Box w="900px" h="480px" m="20px auto">

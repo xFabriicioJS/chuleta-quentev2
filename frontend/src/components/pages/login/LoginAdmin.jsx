@@ -22,11 +22,7 @@ import { useEffect } from "react";
 export default function App() {
 
   useEffect(()=>{
-    let user = JSON.parse(localStorage.getItem('usuario'));
-    if(user?.roles[0] === 'ROLE_ADMIN'){
-      console.log('teste');
-      navigate('/admin');
-    }
+    localStorage.removeItem("usuario");
   },[])
 
 

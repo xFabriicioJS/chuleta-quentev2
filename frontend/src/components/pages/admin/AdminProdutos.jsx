@@ -65,23 +65,20 @@ function AdminProdutos() {
   }
   return (
     <Box
-      bgImage={background}
-      backgroundRepeat="no-repeat"
-      backgroundPosition="center"
-      background="cover"
-      align="center"
-      justify="center"
-      minH="100vh"
+    backgroundImage={background}
+    backgroundRepeat="no-repeat"
+    background="cover"
+    backgroundAttachment={"fixed"}
+    backgroundPosition="center"
     >
-      <DrawerMenu />
       <Heading
         display="flex"
         width="80%"
         m="0 auto"
         bgColor="red.100"
         p="4"
+        mb="1rem"
         rounded="md"
-        my="4"
         fontSize="30"
       >
         Todos os produtos

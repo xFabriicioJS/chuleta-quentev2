@@ -15,20 +15,17 @@ import { useEffect } from "react";
 import AuthService from "../../../services/AuthService";
 
 function Admin() {
-  const [currentUser, setCurrentUser] = useState(undefined);
   let navigate = useNavigate();
 
   useEffect(() => {
     const user = AuthService.getCurrentUser();
-    if (user) {
-      setCurrentUser(user);
+    if(!user || user.roles[0] === "ROLE_USER"){
+      navigate("/login/admin");
     }
+
+    
    
   }, []);
-
-  if (!currentUser || currentUser.roles[0] == "ROLE_USER") {
-    return navigate("/login/admin");
-  }
   return (
     <Box
       bgImage={background}

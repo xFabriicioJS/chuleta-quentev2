@@ -46,8 +46,7 @@ export default function App() {
     }
   });
   return (
-    <>
-      
+    <>      
     <Flex gap="20"
     bgImage={background}
     backgroundRepeat="no-repeat"
@@ -72,6 +71,7 @@ export default function App() {
       rounded="2xl"
       width="30"
       mx="auto"
+
       >
       <FaUserCircle
       fontSize={'280px'}
@@ -79,7 +79,7 @@ export default function App() {
       />
       </Box>
       </Box>
-      <Box bg="white" p={6} rounded="xl" w="25%" border="2px solid orange" h="60vh">
+      <Box bg="white" p={6} rounded="xl" w="25%" border="2px solid orange">
         <form onSubmit={formik.handleSubmit}>
           <VStack spacing={4} align="flex-start">
             <Heading
